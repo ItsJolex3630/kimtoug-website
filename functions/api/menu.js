@@ -1,4 +1,4 @@
-import { query, jsonResponse, errorResponse } from '../_db.js';
+import { query, jsonResponse, errorResponse } from './_db.js';
 
 export async function onRequestGet(context) {
   try {
