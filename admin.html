@@ -270,7 +270,7 @@
       document.getElementById('tab-' + name).classList.add('active');
     }
 
-    function esc(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]); }
+    function esc(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
     function showMsg(text, ok) {
       const el = document.getElementById('msg');
