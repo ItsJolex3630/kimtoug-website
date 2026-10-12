@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin · Kimtoug</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#f5ebd4;--k:#e6d4b0;--dk:#40201a;--md:#6f3826;--tan:#c9a577;
+      --disp:'Bungee',cursive;--h:'Rubik',sans-serif;--good:#2e7d32;--bad:#c62828;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font:16px var(--h);background:var(--bg);color:var(--dk);min-height:100vh}
+    header{background:var(--dk);color:#fff;padding:18px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+    header h1{font:1.3rem var(--disp);margin:0;text-transform:uppercase;letter-spacing:.05em;color:var(--tan)}
+    .w{max-width:1100px;margin:0 auto;padding:24px 18px}
+    .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;border-bottom:2px solid var(--k);padding-bottom:8px}
+    .tabs button{background:transparent;border:none;font:600 1rem var(--h);color:var(--md);padding:10px 16px;cursor:pointer;border-radius:8px 8px 0 0}
+    .tabs button.active{background:var(--k);color:var(--dk)}
+    .panel{display:none}
+    .panel.active{display:block}
+    .card{background:#fff;border-radius:14px;padding:20px;box-shadow:0 4px 18px rgba(64,32,26,.08);margin-bottom:18px}
+    .card h2{font:1.1rem var(--disp);margin:0 0 16px;text-transform:uppercase;letter-spacing:.03em;color:var(--md)}
+    table{width:100%;border-collapse:collapse;font-size:.95rem}
+    th,td{padding:12px 10px;text-align:left;border-bottom:1px solid #eee}
+    th{font-weight:700;color:var(--md);background:#faf7f0}
+    tr:hover td{background:#faf7f0}
+    .btn{display:inline-flex;align-items:center;gap:6px;background:var(--md);color:#fff;border:none;padding:10px 18px;border-radius:10px;font:600 .95rem var(--h);cursor:pointer;transition:background 150ms ease,transform 100ms ease}
+    .btn:hover{background:var(--dk)}
+    .btn:active{transform:scale(.98)}
+    .btn.small{padding:6px 12px;font-size:.85rem}
+    .btn.good{background:var(--good)}
+    .btn.bad{background:var(--bad)}
+    .btn.secondary{background:var(--tan);color:var(--dk)}
+    input,textarea,select{width:100%;padding:12px 14px;border:1px solid #ddd;border-radius:10px;font:1rem var(--h);background:#fff;margin-bottom:12px}
+    input:focus,textarea:focus,select:focus{outline:none;border-color:var(--tan);box-shadow:0 0 0 3px rgba(201,165,119,.2)}
+    label{display:block;font-weight:600;margin-bottom:4px;color:var(--md);font-size:.9rem}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+    .modal{position:fixed;inset:0;background:rgba(64,32,26,.6);display:none;align-items:center;justify-content:center;padding:20px;z-index:100}
+    .modal.open{display:flex}
+    .modal>div{background:var(--bg);border-radius:16px;padding:24px;width:100%;max-width:520px;max-height:90vh;overflow:auto}
+    .modal h3{font:1.1rem var(--disp);margin:0 0 16px;color:var(--md);text-transform:uppercase}
+    .actions{display:flex;gap:8px;justify-content:flex-end;margin-top:8px}
+    .login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+    .login .card{max-width:400px;width:100%;text-align:center}
+    .login .card h2{color:var(--md)}
+    .msg{padding:12px 16px;border-radius:10px;margin-bottom:16px;display:none}
+    .msg.show{display:block}
+    .msg.error{background:#ffebee;color:var(--bad)}
+    .msg.ok{background:#e8f5e9;color:var(--good)}
+    .empty{text-align:center;padding:30px;color:#888}
+    .dish-row td{vertical-align:top}
+    .price{font-weight:700;color:var(--md)}
+    .badge{display:inline-block;background:var(--k);color:var(--dk);padding:3px 8px;border-radius:20px;font-size:.8rem;font-weight:600}
+    .hide{display:none}
+  </style>
+</head>
+<body>
+  <div id="login" class="login">
+    <div class="card">
+      <h2 style="font-family:var(--disp);text-transform:uppercase">Panel Admin</h2>
+      <p>Ingresa la clave de administrador para continuar.</p>
+      <input type="password" id="apiKey" placeholder="Clave API">
+      <button class="btn" onclick="doLogin()" style="width:100%">Entrar</button>
+      <div id="loginMsg" class="msg error"></div>
+    </div>
+  </div>
+
+  <div id="app" class="hide">
+    <header>
+      <h1>Kimtoug Admin</h1>
+      <button class="btn small secondary" onclick="logout()">Cerrar sesión</button>
+    </header>
+    <div class="w">
+      <div id="msg" class="msg"></div>
+      <div class="tabs">
+        <button class="active" onclick="showTab('menu')">Menú</button>
+        <button onclick="showTab('categorias')">Categorías</button>
+        <button onclick="showTab('clientes')">Clientes</button>
+      </div>
+
+      <div id="tab-menu" class="panel active">
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+            <h2>Platos</h2>
+            <button class="btn" onclick="openDishModal()">+ Nuevo plato</button>
+          </div>
+          <div id="dishesList"></div>
+        </div>
+      </div>
+
+      <div id="tab-categorias" class="panel">
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+            <h2>Categorías</h2>
+            <button class="btn" onclick="openCategoryModal()">+ Nueva categoría</button>
+          </div>
+          <div id="categoriesList"></div>
+        </div>
+      </div>
+
+      <div id="tab-clientes" class="panel">
+        <div class="card">
+          <h2>Clientes registrados</h2>
+          <div id="customersList"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="dishModal" class="modal">
+    <div>
+      <h3 id="dishModalTitle">Nuevo plato</h3>
+      <input type="hidden" id="dishId">
+      <label>Categoría</label>
+      <select id="dishCategory"></select>
+      <label>Nombre</label>
+      <input type="text" id="dishName" placeholder="Ej: Arroz especial">
+      <label>Descripción</label>
+      <textarea id="dishDesc" rows="2" placeholder="Breve descripción..."></textarea>
+      <label>Precio</label>
+      <input type="text" id="dishPrice" placeholder="Ej: $7,50">
+      <div class="grid">
+        <div>
+          <label>Orden</label>
+          <input type="number" id="dishOrder" value="0">
+        </div>
+        <div>
+          <label>Activo</label>
+          <select id="dishActive">
+            <option value="1">Sí</option>
+            <option value="0">No</option>
+          </select>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn secondary" onclick="closeModals()">Cancelar</button>
+        <button class="btn" onclick="saveDish()">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="categoryModal" class="modal">
+    <div>
+      <h3 id="categoryModalTitle">Nueva categoría</h3>
+      <input type="hidden" id="categoryId">
+      <label>Nombre</label>
+      <input type="text" id="categoryName" placeholder="Ej: Bebidas">
+      <label>Slug</label>
+      <input type="text" id="categorySlug" placeholder="Ej: bebidas">
+      <label>Clave de imagen</label>
+      <input type="text" id="categoryImage" placeholder="Ej: beb">
+      <div class="grid">
+        <div>
+          <label>Orden</label>
+          <input type="number" id="categoryOrder" value="0">
+        </div>
+        <div>
+          <label>Activo</label>
+          <select id="categoryActive">
+            <option value="1">Sí</option>
+            <option value="0">No</option>
+          </select>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn secondary" onclick="closeModals()">Cancelar</button>
+        <button class="btn" onclick="saveCategory()">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API = '/api';
+    let apiKey = localStorage.getItem('kt_admin_key') || '';
+    let categories = [];
+    let dishes = [];
+
+    if (apiKey) { document.getElementById('login').classList.add('hide'); document.getElementById('app').classList.remove('hide'); init(); }
+
+    async function doLogin() {
+      apiKey = document.getElementById('apiKey').value.trim();
+      if (!apiKey) return;
+      const ok = await checkKey(apiKey);
+      if (ok) {
+        localStorage.setItem('kt_admin_key', apiKey);
+        document.getElementById('login').classList.add('hide');
+        document.getElementById('app').classList.remove('hide');
+        init();
+      } else {
+        showLoginMsg('Clave incorrecta');
+      }
+    }
+
+    async function checkKey(key) {
+      try {
+        const r = await fetch(API + '/admin/categories', { headers: { 'Authorization': 'Bearer ' + key } });
+        return r.ok;
+      } catch (e) { return false; }
+    }
+
+    function logout() { localStorage.removeItem('kt_admin_key'); location.reload(); }
+
+    function showLoginMsg(text) { const el = document.getElementById('loginMsg'); el.textContent = text; el.classList.add('show'); }
+
+    async function init() {
+      await Promise.all([loadCategories(), loadDishes(), loadCustomers()]);
+      renderCategoriesSelect();
+      renderDishes();
+      renderCategories();
+    }
+
+    function authHeaders() { return { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey }; }
+
+    async function loadCategories() {
+      const r = await fetch(API + '/admin/categories');
+      categories = r.ok ? await r.json() : [];
+    }
+
+    async function loadDishes() {
+      const r = await fetch(API + '/admin/dishes', { headers: { 'Authorization': 'Bearer ' + apiKey } });
+      dishes = r.ok ? await r.json() : [];
+    }
+
+    async function loadCustomers() {
+      const r = await fetch(API + '/admin/customers', { headers: { 'Authorization': 'Bearer ' + apiKey } });
+      const list = r.ok ? await r.json() : [];
+      const el = document.getElementById('customersList');
+      if (!list.length) { el.innerHTML = '<div class="empty">Sin clientes registrados</div>'; return; }
+      el.innerHTML = '<table><thead><tr><th>Nombre</th><th>Email</th><th>Teléfono</th><th>Dirección</th><th>Notas</th><th>Fecha</th></tr></thead><tbody>' +
+        list.map(c => `<tr><td>${esc(c.name)}</td><td>${esc(c.email||'-')}</td><td>${esc(c.phone||'-')}</td><td>${esc(c.address||'-')}</td><td>${esc(c.notes||'-')}</td><td>${c.created_at ? c.created_at.split('T')[0] : '-'}</td></tr>`).join('') +
+        '</tbody></table>';
+    }
+
+    function renderCategoriesSelect() {
+      const sel = document.getElementById('dishCategory');
+      sel.innerHTML = categories.map(c => `<option value="${c.id}">${esc(c.name)}</option>`).join('');
+    }
+
+    function renderDishes() {
+      const el = document.getElementById('dishesList');
+      if (!dishes.length) { el.innerHTML = '<div class="empty">No hay platos</div>'; return; }
+      let html = '';
+      for (const cat of categories) {
+        const catDishes = dishes.filter(d => d.category_id === cat.id);
+        if (!catDishes.length) continue;
+        html += `<h3 style="font:1rem var(--disp);color:var(--md);text-transform:uppercase;margin:20px 0 10px">${esc(cat.name)}</h3>`;
+        html += '<table><thead><tr><th>Nombre</th><th>Descripción</th><th>Precio</th><th>Orden</th><th>Estado</th><th style="width:130px">Acciones</th></tr></thead><tbody>';
+        html += catDishes.map(d => `<tr class="dish-row"><td><strong>${esc(d.name)}</strong></td><td>${esc(d.description||'-')}</td><td class="price">${esc(d.price)}</td><td>${d.sort_order}</td><td>${d.is_active ? '<span class="badge">Activo</span>' : '<span class="badge" style="background:#ddd">Oculto</span>'}</td><td><button class="btn small secondary" onclick="editDish(${d.id})">Editar</button> <button class="btn small bad" onclick="deleteDish(${d.id})">×</button></td></tr>`).join('');
+        html += '</tbody></table>';
+      }
+      el.innerHTML = html || '<div class="empty">No hay platos activos</div>';
+    }
+
+    function renderCategories() {
+      const el = document.getElementById('categoriesList');
+      if (!categories.length) { el.innerHTML = '<div class="empty">No hay categorías</div>'; return; }
+      el.innerHTML = '<table><thead><tr><th>Nombre</th><th>Slug</th><th>Imagen</th><th>Orden</th><th>Estado</th><th style="width:130px">Acciones</th></tr></thead><tbody>' +
+        categories.map(c => `<tr><td><strong>${esc(c.name)}</strong></td><td>${esc(c.slug)}</td><td>${esc(c.image_key||'-')}</td><td>${c.sort_order}</td><td>${c.is_active ? '<span class="badge">Activo</span>' : '<span class="badge" style="background:#ddd">Oculto</span>'}</td><td><button class="btn small secondary" onclick="editCategory(${c.id})">Editar</button> <button class="btn small bad" onclick="deleteCategory(${c.id})">×</button></td></tr>`).join('') +
+        '</tbody></table>';
+    }
+
+    function showTab(name) {
+      document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
+      document.querySelector(`.tabs button[onclick="showTab('${name}')"]`).classList.add('active');
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('tab-' + name).classList.add('active');
+    }
+
+    function esc(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]); }
+
+    function showMsg(text, ok) {
+      const el = document.getElementById('msg');
+      el.textContent = text;
+      el.className = 'msg show ' + (ok ? 'ok' : 'error');
+      setTimeout(() => el.classList.remove('show'), 4000);
+    }
+
+    function closeModals() {
+      document.querySelectorAll('.modal').forEach(m => m.classList.remove('open'));
+    }
+
+    function openDishModal(dish) {
+      document.getElementById('dishModalTitle').textContent = dish ? 'Editar plato' : 'Nuevo plato';
+      document.getElementById('dishId').value = dish ? dish.id : '';
+      document.getElementById('dishCategory').value = dish ? dish.category_id : (categories[0]?.id || '');
+      document.getElementById('dishName').value = dish ? dish.name : '';
+      document.getElementById('dishDesc').value = dish ? (dish.description || '') : '';
+      document.getElementById('dishPrice').value = dish ? dish.price : '';
+      document.getElementById('dishOrder').value = dish ? dish.sort_order : 0;
+      document.getElementById('dishActive').value = dish ? (dish.is_active ? '1' : '0') : '1';
+      document.getElementById('dishModal').classList.add('open');
+    }
+
+    async function saveDish() {
+      const id = document.getElementById('dishId').value;
+      const body = {
+        category_id: parseInt(document.getElementById('dishCategory').value),
+        name: document.getElementById('dishName').value.trim(),
+        description: document.getElementById('dishDesc').value.trim(),
+        price: document.getElementById('dishPrice').value.trim(),
+        sort_order: parseInt(document.getElementById('dishOrder').value) || 0,
+        is_active: parseInt(document.getElementById('dishActive').value)
+      };
+      if (!body.name || !body.price) return showMsg('Nombre y precio son obligatorios', false);
+      const url = API + '/admin/dishes' + (id ? '/' + id : '');
+      const method = id ? 'PUT' : 'POST';
+      const r = await fetch(url, { method, headers: authHeaders(), body: JSON.stringify(body) });
+      if (r.ok) { closeModals(); await loadDishes(); renderDishes(); showMsg(id ? 'Plato actualizado' : 'Plato creado', true); }
+      else { showMsg('Error al guardar: ' + (await r.text()), false); }
+    }
+
+    async function editDish(id) { openDishModal(dishes.find(d => d.id === id)); }
+
+    async function deleteDish(id) {
+      if (!confirm('¿Eliminar este plato?')) return;
+      const r = await fetch(API + '/admin/dishes/' + id, { method: 'DELETE', headers: { 'Authorization': 'Bearer ' + apiKey } });
+      if (r.ok) { await loadDishes(); renderDishes(); showMsg('Plato eliminado', true); }
+      else showMsg('Error al eliminar', false);
+    }
+
+    function openCategoryModal(cat) {
+      document.getElementById('categoryModalTitle').textContent = cat ? 'Editar categoría' : 'Nueva categoría';
+      document.getElementById('categoryId').value = cat ? cat.id : '';
+      document.getElementById('categoryName').value = cat ? cat.name : '';
+      document.getElementById('categorySlug').value = cat ? cat.slug : '';
+      document.getElementById('categoryImage').value = cat ? (cat.image_key || '') : '';
+      document.getElementById('categoryOrder').value = cat ? cat.sort_order : 0;
+      document.getElementById('categoryActive').value = cat ? (cat.is_active ? '1' : '0') : '1';
+      document.getElementById('categoryModal').classList.add('open');
+    }
+
+    async function saveCategory() {
+      const id = document.getElementById('categoryId').value;
+      const body = {
+        name: document.getElementById('categoryName').value.trim(),
+        slug: document.getElementById('categorySlug').value.trim(),
+        image_key: document.getElementById('categoryImage').value.trim(),
+        sort_order: parseInt(document.getElementById('categoryOrder').value) || 0,
+        is_active: parseInt(document.getElementById('categoryActive').value)
+      };
+      if (!body.name || !body.slug) return showMsg('Nombre y slug son obligatorios', false);
+      const url = API + '/admin/categories' + (id ? '/' + id : '');
+      const method = id ? 'PUT' : 'POST';
+      const r = await fetch(url, { method, headers: authHeaders(), body: JSON.stringify(body) });
+      if (r.ok) { closeModals(); await loadCategories(); renderCategoriesSelect(); renderCategories(); renderDishes(); showMsg(id ? 'Categoría actualizada' : 'Categoría creada', true); }
+      else { showMsg('Error al guardar: ' + (await r.text()), false); }
+    }
+
+    async function editCategory(id) { openCategoryModal(categories.find(c => c.id === id)); }
+
+    async function deleteCategory(id) {
+      if (!confirm('¿Eliminar esta categoría y todos sus platos?')) return;
+      const r = await fetch(API + '/admin/categories/' + id, { method: 'DELETE', headers: { 'Authorization': 'Bearer ' + apiKey } });
+      if (r.ok) { await Promise.all([loadCategories(), loadDishes()]); renderCategoriesSelect(); renderCategories(); renderDishes(); showMsg('Categoría eliminada', true); }
+      else showMsg('Error al eliminar', false);
+    }
+
+    document.getElementById('categoryName').addEventListener('input', e => {
+      const slug = e.target.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      if (!document.getElementById('categoryId').value) document.getElementById('categorySlug').value = slug;
+    });
+  </script>
+</body>
+</html>
