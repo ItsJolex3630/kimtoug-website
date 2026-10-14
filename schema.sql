@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS dishes (
   name TEXT NOT NULL,
   description TEXT,
   price TEXT NOT NULL,
+  group_name TEXT,
   is_active INTEGER DEFAULT 1,
   sort_order INTEGER DEFAULT 0,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
