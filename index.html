@@ -1582,10 +1582,20 @@ nav .cart-b b{background:var(--dk,#40201a)!important;color:var(--tan,#c9a577)!im
   color: #ffd88a;
 }
 /* Al desplegarse la descripción, la viñeta rota 90° hacia abajo */
-.rw.has-desc.open .rw-bullet,
-.rw.has-desc .rw-head.open .rw-bullet {
+.rw.has-desc.desc-open .rw-bullet,
+.rw.has-desc .rw-head.desc-open .rw-bullet {
   transform: rotate(90deg);
   color: #ffffff;
+}
+.rw-head,
+.rw.has-desc .rw-head,
+.rw.has-desc.desc-open,
+.rw-head.desc-open {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
 }
 /* Nombre del plato */
 .rw .n {
@@ -2153,8 +2163,8 @@ document.addEventListener('click',e=>{
     if(dd){
       const op=dd.classList.toggle('on');
       dd.hidden=!op;
-      rwHead.classList.toggle('open',op);
-      if(rw)rw.classList.toggle('open',op);
+      rwHead.classList.toggle('desc-open',op);
+      if(rw)rw.classList.toggle('desc-open',op);
       rwHead.setAttribute('aria-expanded',op);
     }
     return;
