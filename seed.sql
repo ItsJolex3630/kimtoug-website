@@ -47,34 +47,34 @@ INSERT INTO dishes (category_id, name, description, price, group_name, sort_orde
 INSERT INTO dishes (category_id, name, description, price, group_name, sort_order) 
   SELECT id, 'Chop suey pollo y cerdo', 'Pollo y cerdo asado con vegetales mixtos', '$7,50', NULL, 3 FROM categories WHERE slug = 'chop-suey';
 INSERT INTO dishes (category_id, name, description, price, group_name, sort_order) 
-  SELECT id, 'Chop suey con cerdo', 'Cerdo en tiras con vegetales al wok (sin col ni champiñones)', '$7,50', NULL, 4 FROM categories WHERE slug = 'chop-suey';
+  SELECT id, 'Chop suey con cerdo', 'Cerdo en tiras con vegetales salteados', '$7,50', NULL, 4 FROM categories WHERE slug = 'chop-suey';
 INSERT INTO dishes (category_id, name, description, price, group_name, sort_order) 
   SELECT id, 'Chop suey con camarones', 'Camarones jugosos con vegetales al wok', '$8', NULL, 5 FROM categories WHERE slug = 'chop-suey';
 INSERT INTO dishes (category_id, name, description, price, group_name, sort_order) 
-  SELECT id, 'Chop suey con jamón', 'Jamón y pimiento (sin brotes de soya)', '$6', NULL, 6 FROM categories WHERE slug = 'chop-suey';
+  SELECT id, 'Chop suey con jamón', 'Jamón en cubos y pimiento rojo con vegetales', '$6', NULL, 6 FROM categories WHERE slug = 'chop-suey';
 INSERT INTO dishes (category_id, name, description, price, group_name, sort_order) 
   SELECT id, 'Chop suey con carne', 'Ternera en tiras finas con vegetales frescos', '$7', NULL, 7 FROM categories WHERE slug = 'chop-suey';
 INSERT INTO dishes (category_id, name, description, price, group_name, sort_order) 
-  SELECT id, 'Chop suey con vegetales', 'Salteado de vegetales frescos (sin col ni brotes de soya)', '$6', NULL, 8 FROM categories WHERE slug = 'chop-suey';
+  SELECT id, 'Chop suey con vegetales', 'Brócoli, zanahoria y pimiento salteados al wok', '$6', NULL, 8 FROM categories WHERE slug = 'chop-suey';
 INSERT INTO dishes (category_id, name, description, price, group_name, sort_order) 
   SELECT id, 'Chop suey especial casa', 'Pollo, jamón, cerdo, camarón y vegetales', '$8', NULL, 9 FROM categories WHERE slug = 'chop-suey';
 
 -- 4. TALLARINES
 INSERT INTO categories (name, slug, image_key, sort_order) VALUES ('Tallarines', 'tallarines', '', 3);
 INSERT INTO dishes (category_id, name, description, price, group_name, sort_order) 
-  SELECT id, 'Tallarín especial', 'Fideos con pollo, jamón y vegetales (sin huevo)', '$7,50', NULL, 0 FROM categories WHERE slug = 'tallarines';
+  SELECT id, 'Tallarín especial', 'Fideos con pollo, jamón y vegetales', '$7,50', NULL, 0 FROM categories WHERE slug = 'tallarines';
 INSERT INTO dishes (category_id, name, description, price, group_name, sort_order) 
-  SELECT id, 'Tallarín con pollo', 'Fideos con pollo y vegetales frescos', '$7,50', NULL, 1 FROM categories WHERE slug = 'tallarines';
+  SELECT id, 'Tallarín con pollo', 'Fideos suaves con pollo y vegetales', '$7,50', NULL, 1 FROM categories WHERE slug = 'tallarines';
 INSERT INTO dishes (category_id, name, description, price, group_name, sort_order) 
   SELECT id, 'Tallarín pollo y camarones', 'Fideos con pollo y camarones con vegetales', '$8', NULL, 2 FROM categories WHERE slug = 'tallarines';
 INSERT INTO dishes (category_id, name, description, price, group_name, sort_order) 
   SELECT id, 'Tallarín pollo y cerdo', 'Fideos con pollo y cerdo asado en salsa negra', '$8', NULL, 3 FROM categories WHERE slug = 'tallarines';
 INSERT INTO dishes (category_id, name, description, price, group_name, sort_order) 
-  SELECT id, 'Tallarín con cerdo', 'Fideos con cerdo en tiras y cebolla (sin cebollín)', '$8', NULL, 4 FROM categories WHERE slug = 'tallarines';
+  SELECT id, 'Tallarín con cerdo', 'Fideos con cerdo en tiras y cebolla', '$8', NULL, 4 FROM categories WHERE slug = 'tallarines';
 INSERT INTO dishes (category_id, name, description, price, group_name, sort_order) 
-  SELECT id, 'Tallarín con camarones', 'Fideos con camarones, pimentón y cebolla (sin jengibre ni huevo)', '$9', NULL, 5 FROM categories WHERE slug = 'tallarines';
+  SELECT id, 'Tallarín con camarones', 'Fideos con camarones, pimentón y cebolla', '$9', NULL, 5 FROM categories WHERE slug = 'tallarines';
 INSERT INTO dishes (category_id, name, description, price, group_name, sort_order) 
-  SELECT id, 'Tallarín con carne', 'Fideos con ternera salteada y vegetales (sin pimientos)', '$8', NULL, 6 FROM categories WHERE slug = 'tallarines';
+  SELECT id, 'Tallarín con carne', 'Fideos con ternera salteada y vegetales', '$8', NULL, 6 FROM categories WHERE slug = 'tallarines';
 INSERT INTO dishes (category_id, name, description, price, group_name, sort_order) 
   SELECT id, 'Tallarín tres carnes', 'Fideos con carne, cerdo y pollo en salsa especial', '$9', NULL, 7 FROM categories WHERE slug = 'tallarines';
 
@@ -83,15 +83,15 @@ INSERT INTO categories (name, slug, image_key, sort_order) VALUES ('Platos', 'pl
 
 -- 5.1 Agridulce
 INSERT INTO dishes (category_id, name, description, price, group_name, sort_order) 
-  SELECT id, 'Pollo agridulce', 'Pollo rebozado crujiente bañado en salsa agridulce', '$8', 'Agridulce', 0 FROM categories WHERE slug = 'platos';
+  SELECT id, 'Pollo agridulce', 'Pollo rebozado crujiente en salsa agridulce', '$8', 'Agridulce', 0 FROM categories WHERE slug = 'platos';
 INSERT INTO dishes (category_id, name, description, price, group_name, sort_order) 
   SELECT id, 'Costillas agridulces', 'Costillas tiernas glaseadas en salsa agridulce', '$8', 'Agridulce', 1 FROM categories WHERE slug = 'platos';
 
 -- 5.2 Fuyoung (tortillas) - 4 platos
 INSERT INTO dishes (category_id, name, description, price, group_name, sort_order) 
-  SELECT id, 'Fuyoung especial', 'Tortilla esponjosa con pollo, jamón y vegetales (sin camarón)', '$8', 'Fuyoung (tortillas)', 2 FROM categories WHERE slug = 'platos';
+  SELECT id, 'Fuyoung especial', 'Tortilla esponjosa con pollo, jamón y vegetales', '$8', 'Fuyoung (tortillas)', 2 FROM categories WHERE slug = 'platos';
 INSERT INTO dishes (category_id, name, description, price, group_name, sort_order) 
-  SELECT id, 'Fuyoung con pollo', 'Tortilla china con pollo y vegetales salteados al wok', '$8', 'Fuyoung (tortillas)', 3 FROM categories WHERE slug = 'platos';
+  SELECT id, 'Fuyoung con pollo', 'Tortilla china con pollo y vegetales al wok', '$8', 'Fuyoung (tortillas)', 3 FROM categories WHERE slug = 'platos';
 INSERT INTO dishes (category_id, name, description, price, group_name, sort_order) 
   SELECT id, 'Fuyoung con pollo y camarones', 'Tortilla rellena de pollo tierno y camarones con vegetales', '$9', 'Fuyoung (tortillas)', 4 FROM categories WHERE slug = 'platos';
 INSERT INTO dishes (category_id, name, description, price, group_name, sort_order) 
@@ -99,27 +99,27 @@ INSERT INTO dishes (category_id, name, description, price, group_name, sort_orde
 
 -- 5.3 Carnes
 INSERT INTO dishes (category_id, name, description, price, group_name, sort_order) 
-  SELECT id, 'Carne con vegetales', 'Ternera en tiras con vegetales frescos salteados al wok', '$15', 'Carnes', 6 FROM categories WHERE slug = 'platos';
+  SELECT id, 'Carne con vegetales', 'Tiras de ternera salteadas con vegetales frescos', '$15', 'Carnes', 6 FROM categories WHERE slug = 'platos';
 INSERT INTO dishes (category_id, name, description, price, group_name, sort_order) 
-  SELECT id, 'Pollo con vegetales', 'Pechuga de pollo en trozos con vegetales frescos', '$15', 'Carnes', 7 FROM categories WHERE slug = 'platos';
+  SELECT id, 'Pollo con vegetales', 'Trozos de pollo salteados con vegetales frescos', '$15', 'Carnes', 7 FROM categories WHERE slug = 'platos';
 INSERT INTO dishes (category_id, name, description, price, group_name, sort_order) 
-  SELECT id, 'Cerdo con vegetales', 'Cerdo asado con vegetales al wok', '$16', 'Carnes', 8 FROM categories WHERE slug = 'platos';
+  SELECT id, 'Cerdo con vegetales', 'Cerdo salteado con vegetales frescos al wok', '$16', 'Carnes', 8 FROM categories WHERE slug = 'platos';
 
 -- 5.4 Salsa de miel
 INSERT INTO dishes (category_id, name, description, price, group_name, sort_order) 
-  SELECT id, 'Pollo con salsa de miel', 'Pollo crujiente glaseado en salsa de miel y ajonjolí', '$9', 'Salsa de miel', 9 FROM categories WHERE slug = 'platos';
+  SELECT id, 'Pollo con salsa de miel', 'Pollo crujiente en salsa de miel con ajonjolí', '$9', 'Salsa de miel', 9 FROM categories WHERE slug = 'platos';
 INSERT INTO dishes (category_id, name, description, price, group_name, sort_order) 
-  SELECT id, 'Costillas con salsa de miel', 'Costillas glaseadas en miel acompañadas de crutones y ajonjolí', '$9', 'Salsa de miel', 10 FROM categories WHERE slug = 'platos';
+  SELECT id, 'Costillas con salsa de miel', 'Costillas glaseadas en salsa de miel con crutones y ajonjolí', '$9', 'Salsa de miel', 10 FROM categories WHERE slug = 'platos';
 
 -- 5.5 Salsa de curry
 INSERT INTO dishes (category_id, name, description, price, group_name, sort_order) 
-  SELECT id, 'Carne al curry', 'Ternera salteada al curry con pimentón y cebolla (sin leche de coco)', '$15', 'Salsa de curry', 11 FROM categories WHERE slug = 'platos';
+  SELECT id, 'Carne al curry', 'Ternera salteada al curry con pimentón y cebolla', '$15', 'Salsa de curry', 11 FROM categories WHERE slug = 'platos';
 INSERT INTO dishes (category_id, name, description, price, group_name, sort_order) 
-  SELECT id, 'Pollo al curry', 'Pollo salteado al curry con pimentón y cebolla', '$15', 'Salsa de curry', 12 FROM categories WHERE slug = 'platos';
+  SELECT id, 'Pollo al curry', 'Pollo al curry con pimentón y cebolla', '$15', 'Salsa de curry', 12 FROM categories WHERE slug = 'platos';
 
 -- 5.6 Plato caliente
 INSERT INTO dishes (category_id, name, description, price, group_name, sort_order) 
-  SELECT id, 'Ocho sabores', 'Combinación especial: pollo, cerdo, camarones, carne y todos los vegetales', '$18', 'Plato caliente', 13 FROM categories WHERE slug = 'platos';
+  SELECT id, 'Ocho sabores', 'Pollo, cerdo, camarones, carne y todos los vegetales', '$18', 'Plato caliente', 13 FROM categories WHERE slug = 'platos';
 
 -- 6. COMBOS (Sin cambios)
 INSERT INTO categories (name, slug, image_key, sort_order) VALUES ('Combos', 'combos', 'com', 5);
