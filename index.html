@@ -1609,11 +1609,26 @@ nav .cart-b b{background:var(--dk,#40201a)!important;color:var(--tan,#c9a577)!im
   font: italic 0.82rem/1.35 var(--b, sans-serif) !important;
   color: #ffe0b8 !important;
   margin-top: 4px !important;
+  margin-bottom: 8px !important;
   padding-left: 16px !important;
 }
 .rw .dd.on {
   display: block !important;
   animation: fadeIn 200ms ease both;
+}
+
+/* Separación y respiración entre subgrupos de platos (Pastillas amarillas .gt) */
+#mg > div {
+  margin-bottom: 24px;
+}
+#mg > div:last-child {
+  margin-bottom: 0;
+}
+.gt {
+  margin: 22px 0 12px 0 !important;
+}
+#mg > div:first-child .gt {
+  margin-top: 4px !important;
 }
 /* Ocultar cualquier botón .db residual */
 .db {
