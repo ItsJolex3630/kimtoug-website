@@ -82,14 +82,15 @@ export async function execute(sql, args = []) {
   return query(sql, args);
 }
 
-export function jsonResponse(data, status = 200) {
+export function jsonResponse(data, status = 200, customHeaders = {}) {
   return new Response(JSON.stringify(data), {
     status,
     headers: {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, Authorization'
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      ...customHeaders
     }
   });
 }
@@ -100,7 +101,13 @@ export function errorResponse(message, status = 500) {
 
 export function checkAdminAuth(request) {
   const auth = request.headers.get('Authorization') || '';
-  const expected = `Bearer ${process.env.ADMIN_API_KEY || ''}`;
-  if (!process.env.ADMIN_API_KEY) return false;
-  return auth === expected;
+  const expectedKey = process.env.ADMIN_API_KEY || '';
+  if (!expectedKey) return false;
+  const expected = `Bearer ${expectedKey}`;
+  if (auth.length !== expected.length) return false;
+  let mismatch = 0;
+  for (let i = 0; i < auth.length; i++) {
+    mismatch |= auth.charCodeAt(i) ^ expected.charCodeAt(i);
+  }
+  return mismatch === 0;
 }

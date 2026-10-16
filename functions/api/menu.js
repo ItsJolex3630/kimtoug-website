@@ -55,7 +55,9 @@ export async function onRequestGet(context) {
       };
     }
 
-    return jsonResponse(menu);
+    return jsonResponse(menu, 200, {
+      'Cache-Control': 'public, max-age=60, s-maxage=3600, stale-while-revalidate=86400'
+    });
   } catch (e) {
     return errorResponse(e.message, 500);
   }

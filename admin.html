@@ -118,11 +118,11 @@
       <label>Categoría</label>
       <select id="dishCategory"></select>
       <label>Nombre</label>
-      <input type="text" id="dishName" placeholder="Ej: Arroz especial">
+      <input type="text" id="dishName" placeholder="Ej: Arroz especial" maxlength="120">
       <label>Descripción</label>
-      <textarea id="dishDesc" rows="2" placeholder="Breve descripción..."></textarea>
+      <textarea id="dishDesc" rows="2" placeholder="Breve descripción..." maxlength="500"></textarea>
       <label>Precio</label>
-      <input type="text" id="dishPrice" placeholder="Ej: $7,50">
+      <input type="text" id="dishPrice" placeholder="Ej: $7,50" maxlength="30">
       <div class="grid">
         <div>
           <label>Orden</label>
@@ -148,9 +148,9 @@
       <h3 id="categoryModalTitle">Nueva categoría</h3>
       <input type="hidden" id="categoryId">
       <label>Nombre</label>
-      <input type="text" id="categoryName" placeholder="Ej: Bebidas">
+      <input type="text" id="categoryName" placeholder="Ej: Bebidas" maxlength="80">
       <label>Slug</label>
-      <input type="text" id="categorySlug" placeholder="Ej: bebidas">
+      <input type="text" id="categorySlug" placeholder="Ej: bebidas" maxlength="80">
       <label>Clave de imagen</label>
       <input type="text" id="categoryImage" placeholder="Ej: beb">
       <div class="grid">
@@ -216,7 +216,8 @@
     function authHeaders() { return { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey }; }
 
     async function loadCategories() {
-      const r = await fetch(API + '/admin/categories');
+      const r = await fetch(API + '/admin/categories', { headers: { 'Authorization': 'Bearer ' + apiKey } });
+      if (r.status === 401) { logout(); return; }
       categories = r.ok ? await r.json() : [];
     }
 

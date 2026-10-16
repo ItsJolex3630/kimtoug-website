@@ -7,7 +7,7 @@ export async function onRequestGet(context) {
 
   try {
     const customers = await query(
-      'SELECT * FROM customers ORDER BY created_at DESC'
+      'SELECT * FROM customers ORDER BY created_at DESC LIMIT 100'
     );
     return jsonResponse(customers);
   } catch (e) {

@@ -1,6 +1,10 @@
 import { query, jsonResponse, errorResponse, checkAdminAuth } from '../../_db.js';
 
 export async function onRequestGet(context) {
+  if (!checkAdminAuth(context.request)) {
+    return errorResponse('Unauthorized', 401);
+  }
+
   try {
     const categories = await query(
       'SELECT * FROM categories ORDER BY sort_order'
