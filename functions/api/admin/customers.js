@@ -16,7 +16,10 @@ export async function onRequestGet(context) {
 }
 
 export async function onRequestPost(context) {
-  // Public endpoint to register customers (no auth required)
+  if (!checkAdminAuth(context.request)) {
+    return errorResponse('Unauthorized', 401);
+  }
+
   try {
     const body = await context.request.json();
     const { name, email, phone, address, notes } = body;

@@ -175,7 +175,7 @@
 
   <script>
     const API = '/api';
-    let apiKey = localStorage.getItem('kt_admin_key') || '';
+    let apiKey = sessionStorage.getItem('kt_admin_key') || '';
     let categories = [];
     let dishes = [];
 
@@ -186,7 +186,7 @@
       if (!apiKey) return;
       const ok = await checkKey(apiKey);
       if (ok) {
-        localStorage.setItem('kt_admin_key', apiKey);
+        sessionStorage.setItem('kt_admin_key', apiKey);
         document.getElementById('login').classList.add('hide');
         document.getElementById('app').classList.remove('hide');
         init();
@@ -202,7 +202,7 @@
       } catch (e) { return false; }
     }
 
-    function logout() { localStorage.removeItem('kt_admin_key'); location.reload(); }
+    function logout() { sessionStorage.removeItem('kt_admin_key'); location.reload(); }
 
     function showLoginMsg(text) { const el = document.getElementById('loginMsg'); el.textContent = text; el.classList.add('show'); }
 
