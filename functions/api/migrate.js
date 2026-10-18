@@ -91,7 +91,11 @@ export async function onRequestGet(context) {
       INSERT INTO users (email, name, role) VALUES ('jolex3630@gmail.com', 'Joel (Admin)', 'admin')
       ON CONFLICT(email) DO UPDATE SET role = 'admin'
     `);
-    logs.push('Tabla users y usuario admin jolex3630@gmail.com verificados');
+    await query(`
+      INSERT INTO users (email, name, role) VALUES ('barrestaurantkimtougca@gmail.com', 'Kimtoug Restaurant (Admin)', 'admin')
+      ON CONFLICT(email) DO UPDATE SET role = 'admin'
+    `);
+    logs.push('Tabla users y usuarios admin (Joel y Kimtoug Restaurant) verificados');
 
     return jsonResponse({ success: true, logs });
   } catch (e) {

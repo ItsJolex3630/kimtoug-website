@@ -1,7 +1,10 @@
 import { query, jsonResponse, errorResponse } from '../_db.js';
 
 const GOOGLE_CLIENT_ID = '368451259646-lvkp7q372m712rsj2adbidam4d72g4m0.apps.googleusercontent.com';
-const ADMIN_EMAIL = 'jolex3630@gmail.com';
+const ADMIN_EMAILS = [
+  'jolex3630@gmail.com',
+  'barrestaurantkimtougca@gmail.com'
+];
 
 export async function onRequestPost(context) {
   try {
@@ -53,7 +56,7 @@ export async function onRequestPost(context) {
     const users = await query('SELECT id, email, name, role FROM users WHERE email = ?', [email]);
     let user;
 
-    const isAdminEmail = email === ADMIN_EMAIL;
+    const isAdminEmail = ADMIN_EMAILS.includes(email);
 
     if (!users.length) {
       // Si es el correo del dueño/admin, otorgar rol 'admin'
