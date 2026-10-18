@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
     :root{
       --bg:#f5ebd4;--k:#e6d4b0;--dk:#40201a;--md:#6f3826;--tan:#c9a577;
@@ -14,21 +15,25 @@
     }
     *{box-sizing:border-box}
     body{margin:0;font:16px var(--h);background:var(--bg);color:var(--dk);min-height:100vh}
-    header{background:var(--dk);color:#fff;padding:18px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
-    header h1{font:1.3rem var(--disp);margin:0;text-transform:uppercase;letter-spacing:.05em;color:var(--tan)}
+    header{background:var(--dk);color:#fff;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:50;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+    header h1{font:1.15rem var(--disp);margin:0;text-transform:uppercase;letter-spacing:.05em;color:var(--tan);white-space:nowrap}
+    header .btn{min-height:38px;padding:6px 14px;font-size:.85rem}
     .w{max-width:1100px;margin:0 auto;padding:24px 18px}
-    .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;border-bottom:2px solid var(--k);padding-bottom:8px}
-    .tabs button{background:transparent;border:none;font:600 1rem var(--h);color:var(--md);padding:10px 16px;cursor:pointer;border-radius:8px 8px 0 0}
+    .tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;margin-bottom:20px;border-bottom:2px solid var(--k);-webkit-overflow-scrolling:touch;scrollbar-width:none}
+    .tabs::-webkit-scrollbar{display:none}
+    .tabs button{flex-shrink:0;background:transparent;border:none;font:600 .95rem var(--h);color:var(--md);padding:10px 18px;cursor:pointer;border-radius:10px;transition:background 150ms ease,color 150ms ease;min-height:44px}
     .tabs button.active{background:var(--k);color:var(--dk)}
     .panel{display:none}
     .panel.active{display:block}
     .card{background:#fff;border-radius:14px;padding:20px;box-shadow:0 4px 18px rgba(64,32,26,.08);margin-bottom:18px}
-    .card h2{font:1.1rem var(--disp);margin:0 0 16px;text-transform:uppercase;letter-spacing:.03em;color:var(--md)}
+    .card h2{font:1.1rem var(--disp);margin:0;text-transform:uppercase;letter-spacing:.03em;color:var(--md)}
+    .card-top-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:10px}
+    .search-bar{margin-bottom:16px}
     table{width:100%;border-collapse:collapse;font-size:.95rem}
     th,td{padding:12px 10px;text-align:left;border-bottom:1px solid #eee}
     th{font-weight:700;color:var(--md);background:#faf7f0}
     tr:hover td{background:#faf7f0}
-    .btn{display:inline-flex;align-items:center;gap:6px;background:var(--md);color:#fff;border:none;padding:10px 18px;border-radius:10px;font:600 .95rem var(--h);cursor:pointer;transition:background 150ms ease,transform 100ms ease}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;background:var(--md);color:#fff;border:none;padding:10px 18px;border-radius:10px;font:600 .95rem var(--h);cursor:pointer;transition:background 150ms ease,transform 100ms ease}
     .btn:hover{background:var(--dk)}
     .btn:active{transform:scale(.98)}
     .btn.small{padding:6px 12px;font-size:.85rem}
@@ -39,40 +44,116 @@
     input:focus,textarea:focus,select:focus{outline:none;border-color:var(--tan);box-shadow:0 0 0 3px rgba(201,165,119,.2)}
     label{display:block;font-weight:600;margin-bottom:4px;color:var(--md);font-size:.9rem}
     .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
-    .modal{position:fixed;inset:0;background:rgba(64,32,26,.6);display:none;align-items:center;justify-content:center;padding:20px;z-index:100}
+    .modal{position:fixed;inset:0;background:rgba(64,32,26,.65);display:none;align-items:center;justify-content:center;padding:20px;z-index:100;backdrop-filter:blur(2px)}
     .modal.open{display:flex}
-    .modal>div{background:var(--bg);border-radius:16px;padding:24px;width:100%;max-width:520px;max-height:90vh;overflow:auto}
-    .modal h3{font:1.1rem var(--disp);margin:0 0 16px;color:var(--md);text-transform:uppercase}
-    .actions{display:flex;gap:8px;justify-content:flex-end;margin-top:8px}
+    .modal>div{background:var(--bg);border-radius:16px;width:100%;max-width:540px;max-height:90vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 12px 36px rgba(0,0,0,.3)}
+    .modal-header{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid var(--k)}
+    .modal-header h3{font:1.1rem var(--disp);margin:0;color:var(--md);text-transform:uppercase}
+    .modal-close{background:none;border:none;font-size:1.4rem;color:var(--md);cursor:pointer;min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:background 150ms ease}
+    .modal-close:hover{background:var(--k)}
+    .modal-body{padding:20px;overflow-y:auto;-webkit-overflow-scrolling:touch;flex:1}
+    .modal-footer{padding:14px 20px;background:var(--bg);border-top:1px solid var(--k);display:flex;gap:12px;justify-content:flex-end}
+    .modal-footer .btn{min-height:44px;padding:10px 20px;font-size:1rem}
     .login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
     .login .card{max-width:400px;width:100%;text-align:center}
     .login .card h2{color:var(--md)}
-    .msg{padding:12px 16px;border-radius:10px;margin-bottom:16px;display:none}
-    .msg.show{display:block}
-    .msg.error{background:#ffebee;color:var(--bad)}
-    .msg.ok{background:#e8f5e9;color:var(--good)}
+    .msg{position:fixed;top:16px;left:50%;transform:translateX(-50%) translateY(-20px);width:calc(100% - 32px);max-width:480px;padding:14px 18px;border-radius:12px;font-weight:600;font-size:.95rem;display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(64,32,26,.25);z-index:200;opacity:0;pointer-events:none;transition:transform 200ms cubic-bezier(.16,1,.3,1),opacity 200ms ease}
+    .msg.show{display:flex;opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+    .msg.error{background:#ffebee;color:var(--bad);border:1px solid rgba(198,40,40,.3)}
+    .msg.ok{background:#e8f5e9;color:var(--good);border:1px solid rgba(46,125,50,.3)}
     .empty{text-align:center;padding:30px;color:#888}
     .dish-row td{vertical-align:top}
     .price{font-weight:700;color:var(--md)}
     .badge{display:inline-block;background:var(--k);color:var(--dk);padding:3px 8px;border-radius:20px;font-size:.8rem;font-weight:600}
     .hide{display:none}
+
+    /* Adaptación a dispositivos móviles */
+    @media (max-width: 768px) {
+      .w{padding:14px 10px}
+      .card{padding:14px 12px;border-radius:12px;margin-bottom:14px}
+      .card h2{font-size:.95rem}
+      .card-top-bar .btn{padding:8px 14px;font-size:.85rem;min-height:42px}
+
+      /* Card layout responsivo para tablas */
+      .responsive-table-cards thead{display:none}
+      .responsive-table-cards, .responsive-table-cards tbody{display:block;width:100%}
+      .responsive-table-cards tr.dish-row,
+      .responsive-table-cards tr.category-card-row,
+      .responsive-table-cards tr.customer-card-row{
+        display:flex;flex-direction:column;gap:8px;background:#faf7f0;
+        border:1px solid var(--k);border-radius:12px;padding:14px;
+        margin-bottom:12px;box-shadow:0 2px 6px rgba(64,32,26,.04);
+      }
+      .responsive-table-cards td{padding:0;border:none;background:transparent !important}
+      
+      .dish-card-header, .category-card-header, .customer-card-header{
+        display:flex;justify-content:space-between;align-items:flex-start;gap:8px;
+      }
+      .dish-card-title{font-weight:700;font-size:1.05rem;color:var(--dk);line-height:1.25}
+      .dish-card-price{font-size:1.1rem;font-weight:700;color:var(--md);white-space:nowrap}
+      .dish-card-desc{font-size:.9rem;color:#555;line-height:1.35;margin:4px 0}
+      .dish-card-meta, .category-card-meta, .customer-card-meta{
+        display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:.8rem;color:#777;margin-top:2px;
+      }
+      .dish-card-actions, .category-card-actions{
+        display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;
+        padding-top:10px;border-top:1px solid #ebd9bf;
+      }
+      .dish-card-actions .btn, .category-card-actions .btn{min-height:44px;font-size:.9rem}
+      .customer-link{color:var(--md);text-decoration:none;font-weight:600}
+    }
+
+    @media (max-width: 640px) {
+      .modal{align-items:flex-end;padding:0}
+      .modal>div{border-radius:20px 20px 0 0;max-height:92vh;max-width:100%}
+      .modal-header{padding:14px 18px}
+      .modal-body{padding:16px 18px}
+      .modal-footer{padding:12px 18px;display:grid;grid-template-columns:1fr 1fr}
+      .modal-footer .btn{width:100%}
+    }
   </style>
 </head>
 <body>
   <div id="login" class="login">
-    <div class="card">
-      <h2 style="font-family:var(--disp);text-transform:uppercase">Panel Admin</h2>
-      <p>Ingresa la clave de administrador para continuar.</p>
+    <div class="card" style="max-width:420px;text-align:center">
+      <h2 style="font-family:var(--disp);text-transform:uppercase;margin-bottom:8px">Panel Admin</h2>
+      <p style="margin:0 0 18px;font-size:.95rem;color:#666">Inicia sesión con tu cuenta de Google autorizada o ingresa la clave de administrador.</p>
+      
+      <!-- Google Sign In Button -->
+      <div id="g_id_onload"
+           data-client_id="368451259646-lvkp7q372m712rsj2adbidam4d72g4m0.apps.googleusercontent.com"
+           data-callback="handleGoogleLogin"
+           data-auto_prompt="false">
+      </div>
+      <div class="g_id_signin"
+           data-type="standard"
+           data-size="large"
+           data-theme="outline"
+           data-text="sign_in_with"
+           data-shape="pill"
+           data-logo_alignment="left"
+           style="display:flex;justify-content:center;margin-bottom:14px">
+      </div>
+
+      <div style="display:flex;align-items:center;margin:16px 0 14px;gap:10px">
+        <hr style="flex:1;border:none;border-top:1px solid #ddd">
+        <span style="font-size:.78rem;color:#888;font-weight:700;letter-spacing:.05em">O CON CLAVE MANUAL</span>
+        <hr style="flex:1;border:none;border-top:1px solid #ddd">
+      </div>
+
       <input type="password" id="apiKey" placeholder="Clave API">
-      <button class="btn" onclick="doLogin()" style="width:100%">Entrar</button>
-      <div id="loginMsg" class="msg error"></div>
+      <button class="btn" onclick="doLogin()" style="width:100%">Entrar con clave</button>
+      <div id="loginMsg" class="msg error" style="position:static;transform:none;margin-top:12px;width:100%;display:none"></div>
     </div>
   </div>
 
   <div id="app" class="hide">
     <header>
       <h1>Kimtoug Admin</h1>
-      <button class="btn small secondary" onclick="logout()">Cerrar sesión</button>
+      <div style="display:flex;align-items:center;gap:12px">
+        <span id="userBadge" style="font-size:.85rem;color:var(--tan);font-weight:600"></span>
+        <button class="btn small secondary" onclick="logout()">Cerrar sesión</button>
+      </div>
     </header>
     <div class="w">
       <div id="msg" class="msg"></div>
@@ -84,9 +165,12 @@
 
       <div id="tab-menu" class="panel active">
         <div class="card">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <div class="card-top-bar">
             <h2>Platos</h2>
             <button class="btn" onclick="openDishModal()">+ Nuevo plato</button>
+          </div>
+          <div class="search-bar">
+            <input type="text" id="dishSearchInput" placeholder="🔍 Buscar plato..." oninput="filterDishes()" style="margin-bottom:0">
           </div>
           <div id="dishesList"></div>
         </div>
@@ -94,7 +178,7 @@
 
       <div id="tab-categorias" class="panel">
         <div class="card">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <div class="card-top-bar">
             <h2>Categorías</h2>
             <button class="btn" onclick="openCategoryModal()">+ Nueva categoría</button>
           </div>
@@ -111,62 +195,72 @@
     </div>
   </div>
 
-  <div id="dishModal" class="modal">
+  <div id="dishModal" class="modal" onclick="if(event.target===this)closeModals()">
     <div>
-      <h3 id="dishModalTitle">Nuevo plato</h3>
-      <input type="hidden" id="dishId">
-      <label>Categoría</label>
-      <select id="dishCategory"></select>
-      <label>Nombre</label>
-      <input type="text" id="dishName" placeholder="Ej: Arroz especial" maxlength="120">
-      <label>Descripción</label>
-      <textarea id="dishDesc" rows="2" placeholder="Breve descripción..." maxlength="500"></textarea>
-      <label>Precio</label>
-      <input type="text" id="dishPrice" placeholder="Ej: $7,50" maxlength="30">
-      <div class="grid">
-        <div>
-          <label>Orden</label>
-          <input type="number" id="dishOrder" value="0">
-        </div>
-        <div>
-          <label>Activo</label>
-          <select id="dishActive">
-            <option value="1">Sí</option>
-            <option value="0">No</option>
-          </select>
+      <div class="modal-header">
+        <h3 id="dishModalTitle">Nuevo plato</h3>
+        <button type="button" class="modal-close" onclick="closeModals()" aria-label="Cerrar modal">✕</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="dishId">
+        <label>Categoría</label>
+        <select id="dishCategory"></select>
+        <label>Nombre</label>
+        <input type="text" id="dishName" placeholder="Ej: Arroz especial" maxlength="120">
+        <label>Descripción</label>
+        <textarea id="dishDesc" rows="2" placeholder="Breve descripción..." maxlength="500"></textarea>
+        <label>Precio</label>
+        <input type="text" id="dishPrice" placeholder="Ej: $7,50" maxlength="30">
+        <div class="grid">
+          <div>
+            <label>Orden</label>
+            <input type="number" id="dishOrder" value="0">
+          </div>
+          <div>
+            <label>Activo</label>
+            <select id="dishActive">
+              <option value="1">Sí</option>
+              <option value="0">No</option>
+            </select>
+          </div>
         </div>
       </div>
-      <div class="actions">
+      <div class="modal-footer">
         <button class="btn secondary" onclick="closeModals()">Cancelar</button>
         <button class="btn" onclick="saveDish()">Guardar</button>
       </div>
     </div>
   </div>
 
-  <div id="categoryModal" class="modal">
+  <div id="categoryModal" class="modal" onclick="if(event.target===this)closeModals()">
     <div>
-      <h3 id="categoryModalTitle">Nueva categoría</h3>
-      <input type="hidden" id="categoryId">
-      <label>Nombre</label>
-      <input type="text" id="categoryName" placeholder="Ej: Bebidas" maxlength="80">
-      <label>Slug</label>
-      <input type="text" id="categorySlug" placeholder="Ej: bebidas" maxlength="80">
-      <label>Clave de imagen</label>
-      <input type="text" id="categoryImage" placeholder="Ej: beb">
-      <div class="grid">
-        <div>
-          <label>Orden</label>
-          <input type="number" id="categoryOrder" value="0">
-        </div>
-        <div>
-          <label>Activo</label>
-          <select id="categoryActive">
-            <option value="1">Sí</option>
-            <option value="0">No</option>
-          </select>
+      <div class="modal-header">
+        <h3 id="categoryModalTitle">Nueva categoría</h3>
+        <button type="button" class="modal-close" onclick="closeModals()" aria-label="Cerrar modal">✕</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="categoryId">
+        <label>Nombre</label>
+        <input type="text" id="categoryName" placeholder="Ej: Bebidas" maxlength="80">
+        <label>Slug</label>
+        <input type="text" id="categorySlug" placeholder="Ej: bebidas" maxlength="80">
+        <label>Clave de imagen</label>
+        <input type="text" id="categoryImage" placeholder="Ej: beb">
+        <div class="grid">
+          <div>
+            <label>Orden</label>
+            <input type="number" id="categoryOrder" value="0">
+          </div>
+          <div>
+            <label>Activo</label>
+            <select id="categoryActive">
+              <option value="1">Sí</option>
+              <option value="0">No</option>
+            </select>
+          </div>
         </div>
       </div>
-      <div class="actions">
+      <div class="modal-footer">
         <button class="btn secondary" onclick="closeModals()">Cancelar</button>
         <button class="btn" onclick="saveCategory()">Guardar</button>
       </div>
@@ -180,6 +274,31 @@
     let dishes = [];
 
     if (apiKey) { document.getElementById('login').classList.add('hide'); document.getElementById('app').classList.remove('hide'); init(); }
+
+    async function handleGoogleLogin(res) {
+      const credential = res.credential;
+      if (!credential) return;
+      try {
+        const r = await fetch(API + '/auth/google', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ credential })
+        });
+        const data = await r.json();
+        if (r.ok && data.ok && data.user && data.user.isAdmin) {
+          apiKey = data.user.adminKey || '';
+          sessionStorage.setItem('kt_admin_key', apiKey);
+          sessionStorage.setItem('kt_admin_user', JSON.stringify(data.user));
+          document.getElementById('login').classList.add('hide');
+          document.getElementById('app').classList.remove('hide');
+          init();
+        } else {
+          showLoginMsg(data.error || 'Acceso denegado: tu cuenta no tiene permisos de administrador');
+        }
+      } catch (e) {
+        showLoginMsg('Error al conectar con el servidor de autenticación');
+      }
+    }
 
     async function doLogin() {
       apiKey = document.getElementById('apiKey').value.trim();
@@ -202,11 +321,22 @@
       } catch (e) { return false; }
     }
 
-    function logout() { sessionStorage.removeItem('kt_admin_key'); location.reload(); }
+    function logout() {
+      sessionStorage.removeItem('kt_admin_key');
+      sessionStorage.removeItem('kt_admin_user');
+      localStorage.removeItem('kt_user');
+      if (window.google?.accounts?.id) google.accounts.id.disableAutoSelect();
+      location.reload();
+    }
 
-    function showLoginMsg(text) { const el = document.getElementById('loginMsg'); el.textContent = text; el.classList.add('show'); }
+    function showLoginMsg(text) { const el = document.getElementById('loginMsg'); el.textContent = text; el.style.display = 'flex'; el.classList.add('show'); }
 
     async function init() {
+      const u = JSON.parse(sessionStorage.getItem('kt_admin_user') || '{}');
+      if (u.name || u.email) {
+        const badge = document.getElementById('userBadge');
+        if (badge) badge.textContent = '👤 ' + (u.name || u.email);
+      }
       await Promise.all([loadCategories(), loadDishes(), loadCustomers()]);
       renderCategoriesSelect();
       renderDishes();
@@ -231,8 +361,21 @@
       const list = r.ok ? await r.json() : [];
       const el = document.getElementById('customersList');
       if (!list.length) { el.innerHTML = '<div class="empty">Sin clientes registrados</div>'; return; }
-      el.innerHTML = '<table><thead><tr><th>Nombre</th><th>Email</th><th>Teléfono</th><th>Dirección</th><th>Notas</th><th>Fecha</th></tr></thead><tbody>' +
-        list.map(c => `<tr><td>${esc(c.name)}</td><td>${esc(c.email||'-')}</td><td>${esc(c.phone||'-')}</td><td>${esc(c.address||'-')}</td><td>${esc(c.notes||'-')}</td><td>${c.created_at ? c.created_at.split('T')[0] : '-'}</td></tr>`).join('') +
+      el.innerHTML = '<table class="responsive-table-cards"><thead><tr><th>Nombre</th><th>Email</th><th>Teléfono</th><th>Dirección</th><th>Notas</th><th>Fecha</th></tr></thead><tbody>' +
+        list.map(c => `
+          <tr class="customer-card-row">
+            <td class="customer-card-header">
+              <strong style="font-size:1.05rem;color:var(--dk)">${esc(c.name)}</strong>
+              <span style="font-size:.8rem;color:#777">${c.created_at ? c.created_at.split('T')[0] : '-'}</span>
+            </td>
+            <td class="customer-card-meta">
+              ${c.phone ? `<span>📞 <a class="customer-link" href="tel:${esc(c.phone)}">${esc(c.phone)}</a></span>` : ''}
+              ${c.email ? `<span>✉️ <a class="customer-link" href="mailto:${esc(c.email)}">${esc(c.email)}</a></span>` : ''}
+            </td>
+            ${c.address ? `<td style="font-size:.9rem;color:#444">📍 ${esc(c.address)}</td>` : ''}
+            ${c.notes ? `<td style="font-size:.85rem;color:#666;font-style:italic">📝 ${esc(c.notes)}</td>` : ''}
+          </tr>
+        `).join('') +
         '</tbody></table>';
     }
 
@@ -241,26 +384,72 @@
       sel.innerHTML = categories.map(c => `<option value="${c.id}">${esc(c.name)}</option>`).join('');
     }
 
-    function renderDishes() {
+    function filterDishes() {
+      const q = (document.getElementById('dishSearchInput')?.value || '').toLowerCase().trim();
+      renderDishes(q);
+    }
+
+    function renderDishes(queryFilter = '') {
       const el = document.getElementById('dishesList');
       if (!dishes.length) { el.innerHTML = '<div class="empty">No hay platos</div>'; return; }
       let html = '';
       for (const cat of categories) {
-        const catDishes = dishes.filter(d => d.category_id === cat.id);
+        let catDishes = dishes.filter(d => d.category_id === cat.id);
+        if (queryFilter) {
+          catDishes = catDishes.filter(d =>
+            d.name.toLowerCase().includes(queryFilter) ||
+            (d.description && d.description.toLowerCase().includes(queryFilter))
+          );
+        }
         if (!catDishes.length) continue;
-        html += `<h3 style="font:1rem var(--disp);color:var(--md);text-transform:uppercase;margin:20px 0 10px">${esc(cat.name)}</h3>`;
-        html += '<table><thead><tr><th>Nombre</th><th>Descripción</th><th>Precio</th><th>Orden</th><th>Estado</th><th style="width:130px">Acciones</th></tr></thead><tbody>';
-        html += catDishes.map(d => `<tr class="dish-row"><td><strong>${esc(d.name)}</strong></td><td>${esc(d.description||'-')}</td><td class="price">${esc(d.price)}</td><td>${d.sort_order}</td><td>${d.is_active ? '<span class="badge">Activo</span>' : '<span class="badge" style="background:#ddd">Oculto</span>'}</td><td><button class="btn small secondary" onclick="editDish(${d.id})">Editar</button> <button class="btn small bad" onclick="deleteDish(${d.id})">×</button></td></tr>`).join('');
+        html += `<h3 style="font:1rem var(--disp);color:var(--md);text-transform:uppercase;margin:22px 0 12px;padding-bottom:4px;border-bottom:1px dashed var(--tan)">${esc(cat.name)}</h3>`;
+        html += '<table class="responsive-table-cards"><thead><tr><th>Nombre</th><th>Descripción</th><th>Precio</th><th>Orden</th><th>Estado</th><th style="width:130px">Acciones</th></tr></thead><tbody>';
+        html += catDishes.map(d => `
+          <tr class="dish-row">
+            <td class="dish-card-header">
+              <span class="dish-card-title">${esc(d.name)}</span>
+              <span class="dish-card-price">${esc(d.price)}</span>
+            </td>
+            ${d.description ? `<td class="dish-card-desc">${esc(d.description)}</td>` : ''}
+            <td class="dish-card-meta">
+              <span>Orden: <strong>${d.sort_order}</strong></span>
+              <span>•</span>
+              ${d.is_active ? '<span class="badge">Activo</span>' : '<span class="badge" style="background:#ddd">Oculto</span>'}
+            </td>
+            <td class="dish-card-actions">
+              <button class="btn secondary" onclick="editDish(${d.id})">✏️ Editar</button>
+              <button class="btn bad" onclick="deleteDish(${d.id})">🗑️ Eliminar</button>
+            </td>
+          </tr>
+        `).join('');
         html += '</tbody></table>';
       }
-      el.innerHTML = html || '<div class="empty">No hay platos activos</div>';
+      el.innerHTML = html || '<div class="empty">No se encontraron platos que coincidan</div>';
     }
 
     function renderCategories() {
       const el = document.getElementById('categoriesList');
       if (!categories.length) { el.innerHTML = '<div class="empty">No hay categorías</div>'; return; }
-      el.innerHTML = '<table><thead><tr><th>Nombre</th><th>Slug</th><th>Imagen</th><th>Orden</th><th>Estado</th><th style="width:130px">Acciones</th></tr></thead><tbody>' +
-        categories.map(c => `<tr><td><strong>${esc(c.name)}</strong></td><td>${esc(c.slug)}</td><td>${esc(c.image_key||'-')}</td><td>${c.sort_order}</td><td>${c.is_active ? '<span class="badge">Activo</span>' : '<span class="badge" style="background:#ddd">Oculto</span>'}</td><td><button class="btn small secondary" onclick="editCategory(${c.id})">Editar</button> <button class="btn small bad" onclick="deleteCategory(${c.id})">×</button></td></tr>`).join('') +
+      el.innerHTML = '<table class="responsive-table-cards"><thead><tr><th>Nombre</th><th>Slug</th><th>Imagen</th><th>Orden</th><th>Estado</th><th style="width:130px">Acciones</th></tr></thead><tbody>' +
+        categories.map(c => `
+          <tr class="category-card-row">
+            <td class="category-card-header">
+              <strong style="font-size:1.05rem;color:var(--dk)">${esc(c.name)}</strong>
+              ${c.is_active ? '<span class="badge">Activo</span>' : '<span class="badge" style="background:#ddd">Oculto</span>'}
+            </td>
+            <td class="category-card-meta">
+              <span>Slug: <code>${esc(c.slug)}</code></span>
+              <span>•</span>
+              <span>Img: <code>${esc(c.image_key||'-')}</code></span>
+              <span>•</span>
+              <span>Orden: <strong>${c.sort_order}</strong></span>
+            </td>
+            <td class="category-card-actions">
+              <button class="btn secondary" onclick="editCategory(${c.id})">✏️ Editar</button>
+              <button class="btn bad" onclick="deleteCategory(${c.id})">🗑️ Eliminar</button>
+            </td>
+          </tr>
+        `).join('') +
         '</tbody></table>';
     }
 

@@ -1764,7 +1764,8 @@ nav .cart-b b{background:var(--dk,#40201a)!important;color:var(--tan,#c9a577)!im
   }
 }
 </style>
-</head><body><nav><div class="w"><img src="img/logo-kimtoug.svg" alt="Kimtoug" width="46" height="46"><b>Kimtoug</b><div class="nl"><a href="#menu">Menú</a><a href="#opiniones">Opiniones</a><a href="#info">Delivery y contacto</a></div><a class="btn t" style="padding:9px 18px;font-size:15px" href="https://wa.me/584143432131?text=Hola%20Kimtoug%2C%20quiero%20hacer%20un%20pedido">Pedir</a></div></nav>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+</head><body><nav><div class="w"><img src="img/logo-kimtoug.svg" alt="Kimtoug" width="46" height="46"><b>Kimtoug</b><div class="nl"><a href="#menu">Menú</a><a href="#opiniones">Opiniones</a><a href="#info">Delivery y contacto</a></div><a id="nav-admin-link" href="/admin" class="btn t" style="display:none;padding:6px 12px;font-size:13px;background:var(--tan);color:var(--dk);font-weight:700;text-decoration:none;border-radius:99px;white-space:nowrap;margin-left:auto" title="Panel de Administración">⚡ Admin</a><div id="nav-auth-box" style="display:inline-flex;align-items:center;gap:6px"><div id="g_id_onload_home" data-client_id="368451259646-lvkp7q372m712rsj2adbidam4d72g4m0.apps.googleusercontent.com" data-callback="handleHomeGoogleLogin" data-auto_prompt="false"></div><div id="g_home_signin" class="g_id_signin" data-type="icon" data-shape="circle" data-theme="outline" data-size="medium" title="Iniciar sesión con Google"></div><div id="home-user-menu" style="display:none;align-items:center;gap:6px"><img id="home-user-avatar" src="" alt="Usuario" style="width:32px;height:32px;border-radius:50%;border:2px solid var(--tan);object-fit:cover" /><button type="button" onclick="logoutHomeUser()" style="background:none;border:none;color:#ffeccc;font-size:11px;font-weight:600;cursor:pointer;padding:2px 4px" title="Cerrar sesión">Salir</button></div></div><a class="btn t" style="padding:9px 18px;font-size:15px" href="https://wa.me/584143432131?text=Hola%20Kimtoug%2C%20quiero%20hacer%20un%20pedido">Pedir</a></div></nav>
 <header class="hero"><div class="tx"><span class="est">Restaurante Kimtoug · Comida China</span><h1>El auténtico sabor de la comida china</h1><p class="lead">Arroces salteados al wok, chop suey crocante, tallarines y combos hechos al momento. Elige tus platos favoritos y recíbelos calientes con delivery en San Diego.</p><div class="chips"><span>🛵 Servicio de delivery</span><span>🥟 Hecho al momento</span><span>🍛 El auténtico sabor</span></div>
 <div class="hero-schedule" role="status" aria-label="Horario del restaurante"><div class="hs-badge"><i class="hs-dot"></i> Abierto</div><div class="hs-divider" aria-hidden="true"></div><span class="hs-time"><strong>Lun–Sáb:</strong> 12–8:45pm</span><span class="hs-sep" aria-hidden="true">·</span><span class="hs-time"><strong>Dom:</strong> 12–8:30pm</span></div><div><a class="btn" href="https://wa.me/584143432131?text=Hola%20Kimtoug%2C%20quiero%20hacer%20un%20pedido">Pedir por WhatsApp</a> <a class="btn o" href="#menu">Ver menú</a></div></div>
 <div class="kv" role="img" aria-label="Logo de Kimtoug rodeado de platos de comida china y peces koi"><svg class="fish fish-koi-1" viewBox="0 0 70 40" aria-hidden="true"><path d="M2 21C12 5 32 5 44 18c6-7 15-11 24-11-5 7-5 14 0 22-9 0-18-4-24-11C32 33 12 36 2 21z" fill="currentColor"/><circle cx="14" cy="17" r="2" fill="var(--dk)"/></svg><svg class="fish fish-koi-2" viewBox="0 0 70 40" aria-hidden="true"><path d="M2 21C12 5 32 5 44 18c6-7 15-11 24-11-5 7-5 14 0 22-9 0-18-4-24-11C32 33 12 36 2 21z" fill="currentColor"/><circle cx="14" cy="17" r="2" fill="#fff"/></svg><img class="d d1" src="img/hero-arroz.webp" alt="Arroz especial con camarones" width="136" height="136" loading="eager"><img class="d d2" src="img/hero-pollo-agridulce.webp" alt="Pollo agridulce crujiente" width="124" height="124" loading="eager"><img class="d d3" src="img/hero-chop-suey.webp" alt="Chop suey de vegetales frescos" width="120" height="120" loading="eager"><img class="lg" src="img/logo-kimtoug.svg" alt="Restaurante Kimtoug" width="240" height="240" loading="eager"></div></header>
@@ -1859,6 +1860,7 @@ nav .cart-b b{background:var(--dk,#40201a)!important;color:var(--tan,#c9a577)!im
         <li><a href="javascript:void(0)" onclick="openLegalModal('alergenos')" style="color:#ffeccc;text-decoration:none;transition:color 150ms">🍤 Alérgenos y Seguridad</a></li>
         <li><a href="javascript:void(0)" onclick="openLegalModal('privacidad')" style="color:#ffeccc;text-decoration:none;transition:color 150ms">🔒 Política de Privacidad</a></li>
         <li><a href="javascript:void(0)" onclick="openLegalModal('cookies')" style="color:#ffeccc;text-decoration:none;transition:color 150ms">🍪 Política de Cookies</a></li>
+        <li><a href="/admin" style="color:#ffeccc;text-decoration:none;opacity:.7;transition:opacity 150ms" title="Administración">🔑 Panel Admin</a></li>
       </ul>
     </div>
   </div>
@@ -2586,5 +2588,65 @@ function switchLegalTab(tabId){
   const body = document.getElementById('legal-modal-body');
   if(body) body.scrollTop = 0;
 }
+
+// Google OAuth y Control de Acceso Admin
+(function() {
+  function checkHomeAuth() {
+    try {
+      const u = JSON.parse(sessionStorage.getItem('kt_admin_user') || localStorage.getItem('kt_user') || '{}');
+      if (u && u.email) updateHomeAuthUI(u);
+    } catch(e) {}
+  }
+
+  window.handleHomeGoogleLogin = async function(res) {
+    const credential = res.credential;
+    if (!credential) return;
+    try {
+      const r = await fetch('/api/auth/google', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ credential })
+      });
+      const data = await r.json();
+      if (r.ok && data.ok && data.user) {
+        localStorage.setItem('kt_user', JSON.stringify(data.user));
+        if (data.user.isAdmin && data.user.adminKey) {
+          sessionStorage.setItem('kt_admin_key', data.user.adminKey);
+          sessionStorage.setItem('kt_admin_user', JSON.stringify(data.user));
+        }
+        updateHomeAuthUI(data.user);
+      }
+    } catch (err) {
+      console.error('Error al autenticar con Google:', err);
+    }
+  };
+
+  function updateHomeAuthUI(user) {
+    const signin = document.getElementById('g_home_signin');
+    const menu = document.getElementById('home-user-menu');
+    const adminLink = document.getElementById('nav-admin-link');
+    const avatar = document.getElementById('home-user-avatar');
+    if (signin) signin.style.display = 'none';
+    if (menu) menu.style.display = 'inline-flex';
+    if (avatar && user.picture) avatar.src = user.picture;
+    if (user.isAdmin && adminLink) {
+      adminLink.style.display = 'inline-flex';
+    }
+  }
+
+  window.logoutHomeUser = function() {
+    localStorage.removeItem('kt_user');
+    sessionStorage.removeItem('kt_admin_key');
+    sessionStorage.removeItem('kt_admin_user');
+    if (window.google?.accounts?.id) google.accounts.id.disableAutoSelect();
+    location.reload();
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', checkHomeAuth);
+  } else {
+    checkHomeAuth();
+  }
+})();
 </script>
 </body></html>

@@ -75,6 +75,24 @@ export async function onRequestGet(context) {
     }
     logs.push('Descripciones de platos actualizadas');
 
+    // 7. Asegurar tabla users y cuenta de admin
+    await query(`
+      CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        email TEXT NOT NULL UNIQUE,
+        name TEXT,
+        google_id TEXT UNIQUE,
+        role TEXT DEFAULT 'customer',
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+    await query(`
+      INSERT INTO users (email, name, role) VALUES ('jolex3630@gmail.com', 'Joel (Admin)', 'admin')
+      ON CONFLICT(email) DO UPDATE SET role = 'admin'
+    `);
+    logs.push('Tabla users y usuario admin jolex3630@gmail.com verificados');
+
     return jsonResponse({ success: true, logs });
   } catch (e) {
     return errorResponse(e.message, 500);
