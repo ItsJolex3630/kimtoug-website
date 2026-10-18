@@ -2593,7 +2593,7 @@ function switchLegalTab(tabId){
 (function() {
   function checkHomeAuth() {
     try {
-      const u = JSON.parse(sessionStorage.getItem('kt_admin_user') || localStorage.getItem('kt_user') || '{}');
+      const u = JSON.parse(localStorage.getItem('kt_admin_user') || sessionStorage.getItem('kt_admin_user') || localStorage.getItem('kt_user') || sessionStorage.getItem('kt_user') || '{}');
       if (u && u.email) updateHomeAuthUI(u);
     } catch(e) {}
   }
@@ -2610,7 +2610,10 @@ function switchLegalTab(tabId){
       const data = await r.json();
       if (r.ok && data.ok && data.user) {
         localStorage.setItem('kt_user', JSON.stringify(data.user));
+        sessionStorage.setItem('kt_user', JSON.stringify(data.user));
         if (data.user.isAdmin && data.user.adminKey) {
+          localStorage.setItem('kt_admin_key', data.user.adminKey);
+          localStorage.setItem('kt_admin_user', JSON.stringify(data.user));
           sessionStorage.setItem('kt_admin_key', data.user.adminKey);
           sessionStorage.setItem('kt_admin_user', JSON.stringify(data.user));
         }
@@ -2636,6 +2639,9 @@ function switchLegalTab(tabId){
 
   window.logoutHomeUser = function() {
     localStorage.removeItem('kt_user');
+    localStorage.removeItem('kt_admin_key');
+    localStorage.removeItem('kt_admin_user');
+    sessionStorage.removeItem('kt_user');
     sessionStorage.removeItem('kt_admin_key');
     sessionStorage.removeItem('kt_admin_user');
     if (window.google?.accounts?.id) google.accounts.id.disableAutoSelect();
@@ -2646,7 +2652,8 @@ function switchLegalTab(tabId){
     if (window.google?.accounts?.id) {
       google.accounts.id.initialize({
         client_id: '368451259646-lvkp7q372m712rsj2adbidam4d72g4m0.apps.googleusercontent.com',
-        callback: window.handleHomeGoogleLogin
+        callback: window.handleHomeGoogleLogin,
+        auto_select: true
       });
       const btn = document.getElementById('g_home_signin');
       if (btn) {

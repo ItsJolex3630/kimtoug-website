@@ -123,6 +123,7 @@
       <div id="g_id_onload"
            data-client_id="368451259646-lvkp7q372m712rsj2adbidam4d72g4m0.apps.googleusercontent.com"
            data-callback="handleGoogleLogin"
+           data-auto_select="true"
            data-auto_prompt="false">
       </div>
       <div class="g_id_signin"
@@ -269,7 +270,7 @@
 
   <script>
     const API = '/api';
-    let apiKey = sessionStorage.getItem('kt_admin_key') || '';
+    let apiKey = localStorage.getItem('kt_admin_key') || sessionStorage.getItem('kt_admin_key') || '';
     let categories = [];
     let dishes = [];
 
@@ -287,6 +288,8 @@
         const data = await r.json();
         if (r.ok && data.ok && data.user && data.user.isAdmin) {
           apiKey = data.user.adminKey || '';
+          localStorage.setItem('kt_admin_key', apiKey);
+          localStorage.setItem('kt_admin_user', JSON.stringify(data.user));
           sessionStorage.setItem('kt_admin_key', apiKey);
           sessionStorage.setItem('kt_admin_user', JSON.stringify(data.user));
           document.getElementById('login').classList.add('hide');
@@ -305,6 +308,7 @@
       if (!apiKey) return;
       const ok = await checkKey(apiKey);
       if (ok) {
+        localStorage.setItem('kt_admin_key', apiKey);
         sessionStorage.setItem('kt_admin_key', apiKey);
         document.getElementById('login').classList.add('hide');
         document.getElementById('app').classList.remove('hide');
@@ -322,9 +326,11 @@
     }
 
     function logout() {
+      localStorage.removeItem('kt_admin_key');
+      localStorage.removeItem('kt_admin_user');
+      localStorage.removeItem('kt_user');
       sessionStorage.removeItem('kt_admin_key');
       sessionStorage.removeItem('kt_admin_user');
-      localStorage.removeItem('kt_user');
       if (window.google?.accounts?.id) google.accounts.id.disableAutoSelect();
       location.reload();
     }
@@ -332,7 +338,7 @@
     function showLoginMsg(text) { const el = document.getElementById('loginMsg'); el.textContent = text; el.style.display = 'flex'; el.classList.add('show'); }
 
     async function init() {
-      const u = JSON.parse(sessionStorage.getItem('kt_admin_user') || '{}');
+      const u = JSON.parse(localStorage.getItem('kt_admin_user') || sessionStorage.getItem('kt_admin_user') || '{}');
       if (u.name || u.email) {
         const badge = document.getElementById('userBadge');
         if (badge) badge.textContent = '👤 ' + (u.name || u.email);
