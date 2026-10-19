@@ -152,6 +152,7 @@
     <header>
       <h1>Kimtoug Admin</h1>
       <div style="display:flex;align-items:center;gap:12px">
+        <span id="ordersToday" title="Pedidos enviados hoy (se reinicia a las 00:00)" style="font-size:.85rem;color:#fff;font-weight:700;background:rgba(255,255,255,.15);padding:4px 10px;border-radius:99px">🧾 Pedidos hoy: 0</span>
         <span id="userBadge" style="font-size:.85rem;color:var(--tan);font-weight:600"></span>
         <button class="btn small secondary" onclick="logout()">Cerrar sesión</button>
       </div>
@@ -343,13 +344,22 @@
         const badge = document.getElementById('userBadge');
         if (badge) badge.textContent = '👤 ' + (u.name || u.email);
       }
-      await Promise.all([loadCategories(), loadDishes(), loadCustomers()]);
+      await Promise.all([loadCategories(), loadDishes(), loadCustomers(), loadOrdersToday()]);
       renderCategoriesSelect();
       renderDishes();
       renderCategories();
     }
 
     function authHeaders() { return { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey }; }
+
+    async function loadOrdersToday() {
+      try {
+        const r = await fetch(API + '/orders', { headers: { 'Authorization': 'Bearer ' + apiKey } });
+        if (!r.ok) return;
+        const d = await r.json();
+        document.getElementById('ordersToday').textContent = '🧾 Pedidos hoy: ' + d.count;
+      } catch (e) {}
+    }
 
     async function loadCategories() {
       const r = await fetch(API + '/admin/categories', { headers: { 'Authorization': 'Bearer ' + apiKey } });

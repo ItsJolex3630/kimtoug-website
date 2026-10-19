@@ -2416,6 +2416,7 @@ document.addEventListener('click',e=>{
   // Click en el botón de WhatsApp
   if(e.target.closest('#cwa')){
     buzz(12);
+    if(window.__ktCounted!==curOrderId){window.__ktCounted=curOrderId;try{fetch('/api/orders',{method:'POST',keepalive:true}).catch(()=>{})}catch(_){}}
     return;
   }
 
