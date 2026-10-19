@@ -2210,7 +2210,7 @@ function draw(){
   if(s1f)s1f.style.display=ks.length?'block':'none';
 
   // Renderizar tarjetas de producto con estilo PideFácil
-  $('cli').innerHTML=ks.length?ks.map(k=>{const ek=escHTML(k);return '<div class="cl-card"><div class="cl-thumb" aria-hidden="true">🥡</div><div class="cl-info"><b class="cl-name">'+ek+'</b><span class="cl-price">'+(C[k].u==null?'Consultar':m(C[k].u*C[k].q))+'</span></div><div class="cl-actions"><button class="cl-del" data-a="x" data-k="'+ek+'" aria-label="Eliminar '+ek+'"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg></button><div class="cl-stepper"><button data-a="-" data-k="'+ek+'" aria-label="Quitar uno">−</button><span class="cl-qty">'+C[k].q+'</span><button data-a="+" data-k="'+ek+'" aria-label="Agregar uno">+</button></div></div></div>'}).join(''):'<div class="cem">Tu pedido está vacío.<br>Toca + en el menú para agregar.</div>';
+  $('cli').innerHTML=ks.length?ks.map(k=>{const ek=escHTML(k);return '<div class="cl-card"><div class="cl-thumb" aria-hidden="true">🥡</div><div class="cl-info"><b class="cl-name">'+ek+'</b><span class="cl-price">'+(C[k].u==null?'Consultar':m(C[k].u*C[k].q))+'</span></div><div class="cl-actions"><div class="cl-stepper"><button data-a="-" data-k="'+ek+'" aria-label="Quitar uno">−</button><span class="cl-qty">'+C[k].q+'</span><button data-a="+" data-k="'+ek+'" aria-label="Agregar uno">+</button></div></div></div>'}).join(''):'<div class="cem">Tu pedido está vacío.<br>Toca + en el menú para agregar.</div>';
 
   const ccl=$('ccl');
   if(ccl)ccl.style.display=(curStep===1&&ks.length)?'inline-flex':'none';
