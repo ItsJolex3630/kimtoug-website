@@ -2071,7 +2071,7 @@ async function loadMenu(){
         M=data;
         ks=Object.keys(M);
         const activeTab=document.querySelector('#tb [aria-pressed=true]');
-        const current=activeTab?activeTab.textContent:ks[0];
+        const current=activeTab?activeTab.dataset.k:ks[0];
         renderMenu();
         show(M[current]?current:ks[0]);
       }
@@ -2080,11 +2080,11 @@ async function loadMenu(){
 }
 function escHTML(s){return typeof s==='string'?s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])):s}
 function renderMenu(){
-  $('tb').innerHTML=ks.map(k=>'<button>'+escHTML(k)+'</button>').join('');
-  $('tb').onclick=e=>e.target.tagName=='BUTTON'&&show(e.target.textContent);
+  $('tb').innerHTML=ks.map(k=>'<button data-k="'+escHTML(k)+'">'+escHTML(k.replace(/\s*\(vegetales\)/i,''))+'</button>').join('');
+  $('tb').onclick=e=>e.target.tagName=='BUTTON'&&show(e.target.dataset.k);
   show(ks[0]);
 }
-function show(k){$('tb').querySelectorAll('button').forEach(b=>{const isSel=b.textContent===k;b.setAttribute('aria-pressed',isSel);if(isSel&&$('tb').scrollWidth>$('tb').clientWidth){const left=b.offsetLeft-($('tb').clientWidth/2)+(b.offsetWidth/2);$('tb').scrollTo({left,behavior:'smooth'})}});const s=M[k];let n=0;$('mt').textContent=k;$('mph').innerHTML=getSectionIllustration(k);
+function show(k){$('tb').querySelectorAll('button').forEach(b=>{const isSel=b.dataset.k===k;b.setAttribute('aria-pressed',isSel);if(isSel&&$('tb').scrollWidth>$('tb').clientWidth){const left=b.offsetLeft-($('tb').clientWidth/2)+(b.offsetWidth/2);$('tb').scrollTo({left,behavior:'smooth'})}});const s=M[k];let n=0;$('mt').textContent=k==='Tallarines'?'Tallarines (fideos)':k;$('mph').innerHTML=getSectionIllustration(k);
  $('mg').innerHTML=s.g.map(g=>'<div>'+(s.g.length>1?'<span class="gt">'+escHTML(g.t)+'</span>':'')+g.r.map(r=>{const hasDesc=r.d&&r.d.trim()!=='';return '<div style="animation-delay:'+Math.min(n++*30,300)+'ms" class="rw'+(hasDesc?' has-desc':'')+'"><div class="rw-head"'+(hasDesc?' role="button" tabindex="0" aria-expanded="false" title="Toca para ver descripción"':'')+'><span class="rw-title-wrap"><span class="rw-bullet" aria-hidden="true">'+(hasDesc?'▸':'•')+'</span><span class="n">'+escHTML(r.n)+'</span></span>'+(hasDesc?'<span class="dd" hidden>'+escHTML(r.d)+'</span>':'')+'</div><span class="dt"></span><span class="p">'+escHTML(r.p)+'</span></div>'}).join('')+'</div>').join('')}
 loadMenu();
 const QA=[['¿Cuál es el horario?','Lunes a sábado de 12:00 pm a 8:45 pm, y domingos de 12:00 pm a 8:30 pm. ¡Te esperamos!'],['¿Tienen delivery?','¡Sí! Pide por WhatsApp al 0414 343 2131. La zona y el costo del envío te los confirmamos al momento.'],['¿Qué métodos de pago aceptan?','Efectivo, pago móvil, transferencia, Zelle y Binance (USDT). Te enviamos los datos al confirmar tu pedido.'],['¿Cuánto cuestan los combos?','Los combos N°1 al N°3 cuestan $7, los N°4 al N°6 $7,50, y el Kimtoug Kids $6.'],['¿Qué lleva la especial de la casa?','Pollo, jamón, cerdo y camarón. La tienes en arroz ($7,50) y en chop suey ($8).']];
