@@ -36,44 +36,17 @@ export async function onRequestGet(context) {
     }
     logs.push('Subgrupos de platos asignados');
 
-    // 4. Actualizar Lumpias
-    await query("UPDATE dishes SET description = 'Crujientes rollos primavera rellenos de vegetales y jamón' WHERE name LIKE '%Lumpia%'");
+    // 4. Las descripciones de los platos se editan desde el panel de administración.
+    // Esta migración NO debe modificarlas (ni Lumpias, ni Bebidas, ni el resto del menú).
 
-    // 5. Limpiar descripciones de Bebidas y ajustar precios
-    await query("UPDATE dishes SET description = '' WHERE category_id = (SELECT id FROM categories WHERE slug = 'bebidas')");
+
+    // 5. Ajustar precios de Bebidas
     await query("UPDATE dishes SET price = '$1' WHERE name = 'Refresco botella'");
     await query("UPDATE dishes SET price = '$2' WHERE name LIKE 'Refresco 1%' AND name NOT LIKE 'Refresco 1.5%' AND name NOT LIKE 'Refresco 1,5%'");
     await query("UPDATE dishes SET price = '$2,50' WHERE name LIKE 'Refresco 1.5%' OR name LIKE 'Refresco 1,5%'");
     await query("UPDATE dishes SET price = '$3' WHERE name LIKE 'Refresco 2%'");
     await query("UPDATE dishes SET price = '$1,50' WHERE name LIKE 'Agua 600%'");
     logs.push('Bebidas actualizadas');
-
-    // 6. Actualización quirúrgica de descripciones del menú
-    const dishDescriptionUpdates = [
-      ['Chop suey con cerdo', 'Cerdo en tiras con vegetales salteados'],
-      ['Chop suey con jamón', 'Jamón en cubos y pimiento rojo con vegetales'],
-      ['Chop suey con vegetales', 'Brócoli, zanahoria y pimiento salteados al wok'],
-      ['Tallarín especial', 'Fideos con pollo, jamón y vegetales'],
-      ['Tallarín con pollo', 'Fideos suaves con pollo y vegetales'],
-      ['Tallarín con cerdo', 'Fideos con cerdo en tiras y cebolla'],
-      ['Tallarín con camarones', 'Fideos con camarones, pimentón y cebolla'],
-      ['Tallarín con carne', 'Fideos con ternera salteada y vegetales'],
-      ['Pollo agridulce', 'Pollo rebozado crujiente en salsa agridulce'],
-      ['Fuyoung especial', 'Tortilla esponjosa con pollo, jamón y vegetales'],
-      ['Fuyoung con pollo', 'Tortilla china con pollo y vegetales al wok'],
-      ['Carne con vegetales', 'Tiras de ternera salteadas con vegetales frescos'],
-      ['Pollo con vegetales', 'Trozos de pollo salteados con vegetales frescos'],
-      ['Cerdo con vegetales', 'Cerdo salteado con vegetales frescos al wok'],
-      ['Pollo con salsa de miel', 'Pollo crujiente en salsa de miel con ajonjolí'],
-      ['Costillas con salsa de miel', 'Costillas glaseadas en salsa de miel con crutones y ajonjolí'],
-      ['Carne al curry', 'Ternera salteada al curry con pimentón y cebolla'],
-      ['Pollo al curry', 'Pollo al curry con pimentón y cebolla'],
-      ['Ocho sabores', 'Pollo, cerdo, camarones, carne y todos los vegetales']
-    ];
-    for (const [name, desc] of dishDescriptionUpdates) {
-      await query('UPDATE dishes SET description = ? WHERE name = ?', [desc, name]);
-    }
-    logs.push('Descripciones de platos actualizadas');
 
     // 7. Asegurar tabla users y cuenta de admin
     await query(`
