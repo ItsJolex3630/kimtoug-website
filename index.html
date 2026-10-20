@@ -1914,7 +1914,17 @@ const CATEGORY_ART = {
   'Bebidas': 'img/categories/bebidas.webp'
 };
 function getSectionIllustration(k) {
-  const art = CATEGORY_ART[k] || 'img/categories/entradas.webp';
+  let art = CATEGORY_ART[k];
+  if (!art) {
+    const lk = (k || '').toLowerCase();
+    if (lk.includes('chop')) art = 'img/categories/chop-suey.webp';
+    else if (lk.includes('combo')) art = 'img/categories/combos.webp';
+    else if (lk.includes('arroz')) art = 'img/categories/arroz.webp';
+    else if (lk.includes('tallar')) art = 'img/categories/tallarines.webp';
+    else if (lk.includes('plato')) art = 'img/categories/platos.webp';
+    else if (lk.includes('bebida') || lk.includes('refresco')) art = 'img/categories/bebidas.webp';
+    else art = 'img/categories/entradas.webp';
+  }
   const isDrink = k === 'Bebidas';
   const overlay = isDrink
     ? '<svg class="mph-steam" viewBox="0 0 40 40" width="34" height="34" fill="none"><circle cx="16" cy="22" r="1.5" fill="#fff" opacity=".8"/><circle cx="24" cy="16" r="2" fill="#fff" opacity=".65"/><circle cx="19" cy="11" r="1.2" fill="#fff" opacity=".75"/></svg>'
@@ -2086,11 +2096,11 @@ async function loadMenu(){
 }
 function escHTML(s){return typeof s==='string'?s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])):s}
 function renderMenu(){
-  $('tb').innerHTML=ks.map(k=>'<button data-k="'+escHTML(k)+'">'+escHTML(k.replace(/\s*\(vegetales\)/i,''))+'</button>').join('');
+  $('tb').innerHTML=ks.map(k=>'<button data-k="'+escHTML(k)+'">'+escHTML(k.replace(/\s*\((?:vegetales|para\s+1\s+persona)\)/gi,'').trim())+'</button>').join('');
   $('tb').onclick=e=>e.target.tagName=='BUTTON'&&show(e.target.dataset.k);
   show(ks[0]);
 }
-function show(k){$('tb').querySelectorAll('button').forEach(b=>{const isSel=b.dataset.k===k;b.setAttribute('aria-pressed',isSel);if(isSel&&$('tb').scrollWidth>$('tb').clientWidth){const left=b.offsetLeft-($('tb').clientWidth/2)+(b.offsetWidth/2);$('tb').scrollTo({left,behavior:'smooth'})}});const s=M[k];let n=0;$('mt').textContent=k==='Tallarines'?'Tallarines (fideos)':k;$('mph').innerHTML=getSectionIllustration(k);
+function show(k){$('tb').querySelectorAll('button').forEach(b=>{const isSel=b.dataset.k===k;b.setAttribute('aria-pressed',isSel);if(isSel&&$('tb').scrollWidth>$('tb').clientWidth){const left=b.offsetLeft-($('tb').clientWidth/2)+(b.offsetWidth/2);$('tb').scrollTo({left,behavior:'smooth'})}});const s=M[k];let n=0;$('mt').textContent=k==='Tallarines'?'Tallarines (fideos)':(/chop\s*suey/i.test(k)?'Chop suey (Vegetales)':k);$('mph').innerHTML=getSectionIllustration(k);
  $('mg').innerHTML=s.g.map(g=>'<div>'+(s.g.length>1?'<span class="gt">'+escHTML(g.t)+'</span>':'')+g.r.map(r=>{const hasDesc=r.d&&r.d.trim()!=='';return '<div style="animation-delay:'+Math.min(n++*30,300)+'ms" class="rw'+(hasDesc?' desc-open':'')+'"><div class="rw-head'+(hasDesc?' desc-open':'')+'"><span class="rw-title-wrap"><span class="rw-bullet" aria-hidden="true">•</span><span class="n">'+escHTML(r.n)+'</span></span>'+(hasDesc?'<span class="dd on">'+escHTML(r.d)+'</span>':'')+'</div><span class="dt"></span><span class="p">'+escHTML(r.p)+'</span></div>'}).join('')+'</div>').join('')}
 loadMenu();
 const QA=[['¿Cuál es el horario?','Lunes a sábado de 12:00 pm a 8:45 pm, y domingos de 12:00 pm a 8:30 pm. ¡Te esperamos!'],['¿Tienen delivery?','¡Sí! Pide por WhatsApp al 0414 343 2131. La zona y el costo del envío te los confirmamos al momento.'],['¿Qué métodos de pago aceptan?','Efectivo, pago móvil, transferencia, Zelle y Binance (USDT). Te enviamos los datos al confirmar tu pedido.'],['¿Cuánto cuestan los combos?','Los combos N°1 al N°3 cuestan $7, los N°4 al N°6 $7,50, y el Kimtoug Kids $6.'],['¿Qué lleva la especial de la casa?','Pollo, jamón, cerdo y camarón. La tienes en arroz ($7,50) y en chop suey ($8).']];
