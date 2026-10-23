@@ -2188,7 +2188,7 @@ function buildWhatsAppUrl(){
   const tot=ks.reduce((a,k)=>a+(C[k].u||0)*C[k].q,0);
 
   let L=[
-    '¡Hola Restaurante Kimtoug! 🥡 Acabo de realizar el siguiente pedido en su página web:',
+    '¡Hola Kimtoug! 🥡 Acabo de realizar el siguiente pedido en su página web:',
     '📍 Sede: *C.C. Los Arales, San Diego*',
     '🔖 Pedido: *'+curOrderId+'*',
     '',
@@ -2202,6 +2202,7 @@ function buildWhatsAppUrl(){
     const itemTot=C[k].u==null?'Consultar':m(C[k].u*C[k].q);
     L.push('*_'+C[k].q+'x - '+k+' ('+itemTot+')_*');
   });
+  if(notes)L.push('📝 Notas / Alergias: '+notes);
 
   L.push('');
   L.push('*🚚 Envío: A cotizar según zona en San Diego*');
@@ -2215,7 +2216,6 @@ function buildWhatsAppUrl(){
   L.push('🛵 '+selShip);
   if(selShip==='DELIVERY'&&addr)L.push('📍 Dirección: '+addr);
   L.push('💵 '+selPay);
-  if(notes)L.push('📝 Notas / Alergias: '+notes);
   L.push('');
   L.push('✓ _Acepto los Términos, Condiciones y Aviso de Alérgenos de Kimtoug._');
   L.push('☝️ Por favor envía este mensaje para confirmar tu orden');
