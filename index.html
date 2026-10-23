@@ -253,16 +253,26 @@ nav .cart-b b{background:var(--dk,#40201a)!important;color:var(--tan,#c9a577)!im
   flex: none !important;
 }
 
+#sh-hd .sh-nav-btn,
 .sh-nav-btn {
   background: transparent;
   border: 0;
   color: var(--tan, #c9a577);
   font: 700 1.35rem/1 var(--disp, sans-serif);
   cursor: pointer;
-  padding: 4px 8px;
+  padding: 0;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
   border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
   transition: all 120ms ease;
 }
+#sh-hd .sh-nav-btn:hover,
 .sh-nav-btn:hover {
   background: rgba(201, 165, 119, 0.2);
   color: #fff;
