@@ -2234,9 +2234,12 @@ function buildWhatsAppUrl(){
     const itemTot=C[k].u==null?'Consultar':m(C[k].u*C[k].q);
     L.push('*_'+C[k].q+'x - '+k+' ('+itemTot+')_*');
   });
-  if(notes)L.push('📝 Notas / Alergias: '+notes);
 
   L.push('');
+  if(notes){
+    L.push('📝 Notas / Alergias: '+notes);
+    L.push('');
+  }
   L.push('*🚚 Envío: A cotizar según zona en San Diego*');
   L.push('*🪙 Subtotal productos (sin envío): '+m(tot)+'*');
   L.push('ℹ️ _Tasa oficial del BCV para pagos en Bolívares_');
