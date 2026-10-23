@@ -136,12 +136,10 @@ INSERT INTO dishes (category_id, name, description, price, group_name, sort_orde
 INSERT INTO dishes (category_id, name, description, price, group_name, sort_order) 
   SELECT id, 'Combo N°6', 'Arroz frito + chop suey + pollo agridulce', '$7,50', NULL, 5 FROM categories WHERE slug = 'combos';
 INSERT INTO dishes (category_id, name, description, price, group_name, sort_order) 
-  SELECT id, 'Kimtoug Kids', 'Pollo frito tierno + papas fritas doradas', '$6', NULL, 6 FROM categories WHERE slug = 'combos';
+  SELECT id, 'Kimtoug Kids', 'Pollo frito + papas fritas', '$6', NULL, 6 FROM categories WHERE slug = 'combos';
 
 -- 7. BEBIDAS (Sin descripciones, precios actualizados)
 INSERT INTO categories (name, slug, image_key, sort_order) VALUES ('Bebidas', 'bebidas', '', 6);
-INSERT INTO dishes (category_id, name, description, price, group_name, sort_order) 
-  SELECT id, 'Refresco botella', '', '$1', NULL, 0 FROM categories WHERE slug = 'bebidas';
 INSERT INTO dishes (category_id, name, description, price, group_name, sort_order) 
   SELECT id, 'Refresco 1 litro', '', '$2', NULL, 1 FROM categories WHERE slug = 'bebidas';
 INSERT INTO dishes (category_id, name, description, price, group_name, sort_order) 

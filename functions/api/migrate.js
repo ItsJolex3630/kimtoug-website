@@ -40,13 +40,14 @@ export async function onRequestGet(context) {
     // Esta migración NO debe modificarlas (ni Lumpias, ni Bebidas, ni el resto del menú).
 
 
-    // 5. Ajustar precios de Bebidas
-    await query("UPDATE dishes SET price = '$1' WHERE name = 'Refresco botella'");
+    // 5. Ajustar Bebidas y Combos Kids
+    await query("DELETE FROM dishes WHERE name = 'Refresco botella'");
+    await query("UPDATE dishes SET description = 'Pollo frito + papas fritas' WHERE name = 'Kimtoug Kids'");
     await query("UPDATE dishes SET price = '$2' WHERE name LIKE 'Refresco 1%' AND name NOT LIKE 'Refresco 1.5%' AND name NOT LIKE 'Refresco 1,5%'");
     await query("UPDATE dishes SET price = '$2,50' WHERE name LIKE 'Refresco 1.5%' OR name LIKE 'Refresco 1,5%'");
     await query("UPDATE dishes SET price = '$3' WHERE name LIKE 'Refresco 2%'");
     await query("UPDATE dishes SET price = '$1,50' WHERE name LIKE 'Agua 600%'");
-    logs.push('Bebidas actualizadas');
+    logs.push('Bebidas y Combos actualizados');
 
     // 7. Asegurar tabla users y cuenta de admin
     await query(`
