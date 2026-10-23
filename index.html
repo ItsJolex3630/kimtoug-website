@@ -737,47 +737,51 @@ nav .cart-b b{background:var(--dk,#40201a)!important;color:var(--tan,#c9a577)!im
   position: absolute;
   object-fit: contain;
   pointer-events: none;
-  filter: drop-shadow(0 6px 14px rgba(64,32,26,.35));
-  z-index: 2;
+  filter: drop-shadow(0 8px 16px rgba(64,32,26,.38));
+  z-index: 5;
   will-change: transform;
 }
 
 /* Pez Koi Naranja (Cute Fish) - Arriba a la derecha */
 .kv .fish-koi-1 {
-  right: 3%;
-  top: -3%;
-  width: 25%;
+  right: 4%;
+  top: -6%;
+  left: auto;
+  bottom: auto;
+  width: 23%;
   height: auto;
   aspect-ratio: 176 / 370;
   animation: swimKoi1 7s ease-in-out infinite;
   transform-origin: center center;
 }
 
-/* Pez Koi Dorado (Cute Fish) - Asomándose por el plato de arroz */
+/* Pez Koi Dorado (Cute Fish) - Arriba a la izquierda */
 .kv .fish-koi-2 {
-  left: 1%;
-  top: -6%;
-  width: 25%;
+  left: 9%;
+  top: -7%;
+  right: auto;
+  bottom: auto;
+  width: 23%;
   height: auto;
   aspect-ratio: 176 / 370;
-  animation: swimKoi2 8.5s ease-in-out infinite;
+  animation: swimKoi2 8s ease-in-out infinite;
   transform-origin: center center;
 }
 
 @keyframes swimKoi1 {
-  0% { transform: translate(0, 0) rotate(-10deg); }
-  25% { transform: translate(-3px, -5px) rotate(-6deg); }
-  50% { transform: translate(-6px, -2px) rotate(-14deg); }
-  75% { transform: translate(-2px, 3px) rotate(-15deg); }
-  100% { transform: translate(0, 0) rotate(-10deg); }
+  0% { transform: translate(0, 0) rotate(18deg); }
+  25% { transform: translate(-3px, -4px) rotate(22deg); }
+  50% { transform: translate(-5px, 2px) rotate(15deg); }
+  75% { transform: translate(-2px, 5px) rotate(19deg); }
+  100% { transform: translate(0, 0) rotate(18deg); }
 }
 
 @keyframes swimKoi2 {
-  0% { transform: translate(0, 0) rotate(145deg); }
-  30% { transform: translate(3px, 3px) rotate(140deg); }
-  60% { transform: translate(5px, -3px) rotate(150deg); }
-  85% { transform: translate(2px, -4px) rotate(143deg); }
-  100% { transform: translate(0, 0) rotate(145deg); }
+  0% { transform: translate(0, 0) rotate(-15deg); }
+  25% { transform: translate(3px, -4px) rotate(-19deg); }
+  50% { transform: translate(5px, 2px) rotate(-12deg); }
+  75% { transform: translate(2px, 5px) rotate(-16deg); }
+  100% { transform: translate(0, 0) rotate(-15deg); }
 }
 
 /* Levitación suave de los 3 platos circulares */
