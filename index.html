@@ -787,13 +787,13 @@ nav .cart-b b{background:var(--dk,#40201a)!important;color:var(--tan,#c9a577)!im
   transform-origin: center center;
 }
 
-/* Pez Koi Dorado (Cute Fish) - Abajo al centro */
+/* Pez Koi Dorado (Cute Fish) - A la izquierda entre platos */
 .kv .fish-koi-2 {
-  left: 44%;
-  bottom: -4%;
+  left: 2%;
+  top: 27%;
   right: auto;
-  top: auto;
-  width: 20%;
+  bottom: auto;
+  width: 19%;
   height: auto;
   aspect-ratio: 176 / 370;
   animation: swimKoi2 8s ease-in-out infinite;
@@ -809,11 +809,11 @@ nav .cart-b b{background:var(--dk,#40201a)!important;color:var(--tan,#c9a577)!im
 }
 
 @keyframes swimKoi2 {
-  0% { transform: translate(0, 0) rotate(-75deg); }
-  25% { transform: translate(3px, -3px) rotate(-79deg); }
-  50% { transform: translate(4px, 2px) rotate(-71deg); }
-  75% { transform: translate(1px, 4px) rotate(-76deg); }
-  100% { transform: translate(0, 0) rotate(-75deg); }
+  0% { transform: translate(0, 0) scaleX(-1) rotate(16deg); }
+  25% { transform: translate(-2px, 3px) scaleX(-1) rotate(13deg); }
+  50% { transform: translate(2px, -2px) scaleX(-1) rotate(19deg); }
+  75% { transform: translate(-1px, 2px) scaleX(-1) rotate(15deg); }
+  100% { transform: translate(0, 0) scaleX(-1) rotate(16deg); }
 }
 
 /* Levitación suave de los 3 platos circulares */
