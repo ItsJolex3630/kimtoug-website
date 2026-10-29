@@ -119,7 +119,6 @@ nav{background:rgba(125,15,20,.82)!important}nav::after{background:linear-gradie
 .hero .btn:not(.o){background:var(--tan);color:var(--dk)}.hero .btn.o{color:#fff;box-shadow:inset 0 0 0 2px #fff;background:none}
 .est{background:var(--tan);color:var(--dk);font-size:.8rem;padding:6px 14px 10px}
 .kv{position:relative;width:min(86vw,400px);aspect-ratio:1;margin:8px auto 30px;z-index:1;justify-self:center}.kv::before{content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:100%;height:100%;border-radius:50%;background:radial-gradient(circle,rgba(224,38,45,.9) 0%,rgba(200,20,27,.45) 45%,transparent 70%);pointer-events:none;z-index:0}.kv>img.lg{position:absolute;left:20%;top:20%;width:60%;height:60%;aspect-ratio:1/1;object-fit:contain;border-radius:50%;box-shadow:0 14px 40px rgba(0,0,0,.4),0 0 0 6px var(--tan);z-index:3}
-.kv .d{position:absolute;border-radius:50%;object-fit:cover;border:5px solid var(--tan);box-shadow:0 10px 26px rgba(0,0,0,.35);background:#fff;z-index:3}.kv .d1{left:0;top:2%;width:34%;aspect-ratio:1}.kv .d2{right:0;top:30%;width:31%;aspect-ratio:1}.kv .d3{left:8%;bottom:0;width:30%;aspect-ratio:1}
 .kv>img.lg{position:absolute;left:20%;top:20%;width:60%;height:60%;aspect-ratio:1/1;object-fit:contain;border-radius:50%;box-shadow:0 14px 40px rgba(0,0,0,.4),0 0 0 6px var(--tan);z-index:4}
 @media(min-width:800px){.hero{grid-template-columns:1.1fr 1fr;align-items:center;background:radial-gradient(circle at 76% 50%,#e0262d,transparent 55%),linear-gradient(160deg,var(--md),var(--dk))}.kv{margin:30px auto}}
 .band{background:var(--tan)!important;color:var(--dk)!important;border-color:var(--dk)!important}
@@ -784,32 +783,8 @@ nav .cart-b b{background:var(--dk,#40201a)!important;color:var(--tan,#c9a577)!im
   50% { transform: translateY(-7px) rotate(1.2deg); }
 }
 
-/* Levitación suave de los 3 platos circulares */
-.kv .d1 {
-  animation: floatDish1 5s ease-in-out infinite;
-}
-.kv .d2 {
-  animation: floatDish2 6s ease-in-out infinite;
-}
-.kv .d3 {
-  animation: floatDish3 5.5s ease-in-out infinite;
-}
-
-@keyframes floatDish1 {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-7px); }
-}
-@keyframes floatDish2 {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(8px); }
-}
-@keyframes floatDish3 {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .kv .koi-ring, .kv .d1, .kv .d2, .kv .d3 {
+  .kv .koi-ring {
     animation: none !important;
   }
 }
@@ -1792,7 +1767,7 @@ a.wf{width:56px;height:56px;padding:0!important;display:grid!important;place-ite
 </head><body><nav><div class="w"><img src="img/logo-kimtoug.svg" alt="Kimtoug" width="46" height="46"><b>Kimtoug</b><div class="nl"><a href="#menu">Menú</a><a href="#opiniones">Opiniones</a><a href="#info">Delivery y contacto</a></div><a id="nav-admin-link" href="/admin" class="btn t" style="display:none;padding:6px 12px;font-size:13px;background:var(--tan);color:var(--dk);font-weight:700;text-decoration:none;border-radius:99px;white-space:nowrap;margin-left:auto" title="Panel de Administración">⚡ Admin</a><div id="nav-auth-box" style="display:inline-flex;align-items:center;gap:6px"><div id="g_id_onload_home" data-client_id="368451259646-lvkp7q372m712rsj2adbidam4d72g4m0.apps.googleusercontent.com" data-callback="handleHomeGoogleLogin" data-auto_prompt="false"></div><div id="g_home_signin" class="g_id_signin" data-type="icon" data-shape="circle" data-theme="outline" data-size="medium" title="Iniciar sesión con Google"></div><div id="home-user-menu" style="display:none;align-items:center;gap:6px"><img id="home-user-avatar" src="" alt="Usuario" style="width:32px;height:32px;border-radius:50%;border:2px solid var(--tan);object-fit:cover" /><button type="button" onclick="logoutHomeUser()" style="background:none;border:none;color:#ffeccc;font-size:11px;font-weight:600;cursor:pointer;padding:2px 4px" title="Cerrar sesión">Salir</button></div></div><a class="btn t" style="padding:9px 18px;font-size:15px" href="https://wa.me/584143432131?text=Hola%20Kimtoug%2C%20quiero%20hacer%20un%20pedido">Pedir</a></div></nav>
 <header class="hero"><div class="tx"><span class="est">Restaurante Kimtoug · Comida China</span><h1>El auténtico sabor de la comida china</h1><p class="lead">Arroces salteados al wok, chop suey crocante, tallarines y combos hechos al momento. Elige tus platos favoritos y recíbelos calientes con delivery en San Diego.</p><div class="chips"><span>🛵 Servicio de delivery</span><span>🥢 Hecho al momento</span><span>🍚 El auténtico sabor</span></div>
 <div class="hero-schedule" role="status" aria-label="Horario del restaurante"><div class="hs-badge"><i class="hs-dot"></i> Abierto</div><div class="hs-divider" aria-hidden="true"></div><span class="hs-time"><strong>Lun–Sáb:</strong> 12–8:45pm</span><span class="hs-sep" aria-hidden="true">·</span><span class="hs-time"><strong>Dom:</strong> 12–8:30pm</span></div><div><a class="btn" href="https://wa.me/584143432131?text=Hola%20Kimtoug%2C%20quiero%20hacer%20un%20pedido">Pedir por WhatsApp</a> <a class="btn o" href="#menu">Ver menú</a></div></div>
-<div class="kv" role="img" aria-label="Logo de Kimtoug rodeado de platos de comida china y peces koi"><img class="koi-ring" src="img/koi-ring.webp" alt="Peces koi rodeando el logo de Kimtoug" width="754" height="754" loading="eager"><img class="d d1" src="img/hero-arroz.webp" alt="Arroz especial con camarones" width="136" height="136" loading="eager"><img class="d d2" src="img/hero-pollo-agridulce.webp" alt="Pollo agridulce crujiente" width="124" height="124" loading="eager"><img class="d d3" src="img/hero-chop-suey.webp" alt="Chop suey de vegetales frescos" width="120" height="120" loading="eager"><img class="lg" src="img/logo-kimtoug.svg" alt="Restaurante Kimtoug" width="240" height="240" loading="eager"></div></header>
+<div class="kv" role="img" aria-label="Logo de Kimtoug rodeado de peces koi"><img class="koi-ring" src="img/koi-ring.webp" alt="Peces koi rodeando el logo de Kimtoug" width="754" height="754" loading="eager"><img class="lg" src="img/logo-kimtoug.svg" alt="Restaurante Kimtoug" width="240" height="240" loading="eager"></div></header>
 <section id="menu"><div class="w"><h2 class="bar" style="position:relative;isolate:inline;padding-left:24px;padding-right:24px;font:600 1.25rem var(--h);color:var(--dk);clip-path:polygon(0 0,100% 0,100% 100%,50% 82%,0 100%)">Menú</h2><div class="tabs" id="tb"></div><div class="khd"><div id="mph"></div><h3 id="mt"></h3></div><div id="mg"><p style="padding:20px 0;font-weight:700">Cargando menú… Si no aparece, <a style="color:var(--tan)" href="https://wa.me/584143432131?text=Hola%20Kimtoug%2C%20quiero%20hacer%20un%20pedido">escríbenos por WhatsApp</a>.</p></div></div></section>
 <section class="sec" id="como-pedir"><div class="w">
 <h2 class="bar" style="padding-left:18px;border-radius:0 14px 14px 0;display:inline-block;padding-right:40px">¿Cómo pedir?</h2>

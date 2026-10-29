@@ -1,0 +1,7 @@
+# SEGURIDAD CRÍTICA: Bloqueo de variables de entorno
+.env
+.env.*
+!.env.example
+node_modules/
+.wrangler/
+.DS_Store
