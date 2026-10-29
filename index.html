@@ -764,56 +764,24 @@ nav .cart-b b{background:var(--dk,#40201a)!important;color:var(--tan,#c9a577)!im
   position: relative;
 }
 
-/* Peces Koi Ilustrados */
-.kv .fish-koi {
+/* Peces Koi Ilustrados (Yin-Yang rodeando el logo) */
+.kv .koi-ring {
   position: absolute;
+  left: -12%;
+  top: -12%;
+  width: 124%;
+  height: 124%;
   object-fit: contain;
   pointer-events: none;
-  filter: drop-shadow(0 8px 16px rgba(64,32,26,.38));
+  filter: drop-shadow(0 10px 24px rgba(64,32,26,.42));
   z-index: 5;
+  animation: floatKoiRing 8s ease-in-out infinite;
   will-change: transform;
 }
 
-/* Pez Koi Naranja (Cute Fish) - Arriba a la derecha */
-.kv .fish-koi-1 {
-  right: 8%;
-  top: 0%;
-  left: auto;
-  bottom: auto;
-  width: 21%;
-  height: auto;
-  aspect-ratio: 176 / 370;
-  animation: swimKoi1 7s ease-in-out infinite;
-  transform-origin: center center;
-}
-
-/* Pez Koi Dorado (Cute Fish) - A la izquierda entre platos */
-.kv .fish-koi-2 {
-  left: 3%;
-  top: 26%;
-  right: auto;
-  bottom: auto;
-  width: 20%;
-  height: auto;
-  aspect-ratio: 176 / 370;
-  animation: swimKoi2 8s ease-in-out infinite;
-  transform-origin: center center;
-}
-
-@keyframes swimKoi1 {
-  0% { transform: translate(0, 0) rotate(32deg); }
-  25% { transform: translate(-2px, 3px) rotate(35deg); }
-  50% { transform: translate(-4px, -2px) rotate(29deg); }
-  75% { transform: translate(-1px, 2px) rotate(33deg); }
-  100% { transform: translate(0, 0) rotate(32deg); }
-}
-
-@keyframes swimKoi2 {
-  0% { transform: translate(0, 0) scaleX(-1) rotate(190deg); }
-  25% { transform: translate(2px, -3px) scaleX(-1) rotate(187deg); }
-  50% { transform: translate(-2px, 2px) scaleX(-1) rotate(193deg); }
-  75% { transform: translate(1px, -2px) scaleX(-1) rotate(189deg); }
-  100% { transform: translate(0, 0) scaleX(-1) rotate(190deg); }
+@keyframes floatKoiRing {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-7px) rotate(1.2deg); }
 }
 
 /* Levitación suave de los 3 platos circulares */
@@ -841,7 +809,7 @@ nav .cart-b b{background:var(--dk,#40201a)!important;color:var(--tan,#c9a577)!im
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .kv .fish-koi-1, .kv .fish-koi-2, .kv .d1, .kv .d2, .kv .d3 {
+  .kv .koi-ring, .kv .d1, .kv .d2, .kv .d3 {
     animation: none !important;
   }
 }
@@ -1824,7 +1792,7 @@ a.wf{width:56px;height:56px;padding:0!important;display:grid!important;place-ite
 </head><body><nav><div class="w"><img src="img/logo-kimtoug.svg" alt="Kimtoug" width="46" height="46"><b>Kimtoug</b><div class="nl"><a href="#menu">Menú</a><a href="#opiniones">Opiniones</a><a href="#info">Delivery y contacto</a></div><a id="nav-admin-link" href="/admin" class="btn t" style="display:none;padding:6px 12px;font-size:13px;background:var(--tan);color:var(--dk);font-weight:700;text-decoration:none;border-radius:99px;white-space:nowrap;margin-left:auto" title="Panel de Administración">⚡ Admin</a><div id="nav-auth-box" style="display:inline-flex;align-items:center;gap:6px"><div id="g_id_onload_home" data-client_id="368451259646-lvkp7q372m712rsj2adbidam4d72g4m0.apps.googleusercontent.com" data-callback="handleHomeGoogleLogin" data-auto_prompt="false"></div><div id="g_home_signin" class="g_id_signin" data-type="icon" data-shape="circle" data-theme="outline" data-size="medium" title="Iniciar sesión con Google"></div><div id="home-user-menu" style="display:none;align-items:center;gap:6px"><img id="home-user-avatar" src="" alt="Usuario" style="width:32px;height:32px;border-radius:50%;border:2px solid var(--tan);object-fit:cover" /><button type="button" onclick="logoutHomeUser()" style="background:none;border:none;color:#ffeccc;font-size:11px;font-weight:600;cursor:pointer;padding:2px 4px" title="Cerrar sesión">Salir</button></div></div><a class="btn t" style="padding:9px 18px;font-size:15px" href="https://wa.me/584143432131?text=Hola%20Kimtoug%2C%20quiero%20hacer%20un%20pedido">Pedir</a></div></nav>
 <header class="hero"><div class="tx"><span class="est">Restaurante Kimtoug · Comida China</span><h1>El auténtico sabor de la comida china</h1><p class="lead">Arroces salteados al wok, chop suey crocante, tallarines y combos hechos al momento. Elige tus platos favoritos y recíbelos calientes con delivery en San Diego.</p><div class="chips"><span>🛵 Servicio de delivery</span><span>🥢 Hecho al momento</span><span>🍚 El auténtico sabor</span></div>
 <div class="hero-schedule" role="status" aria-label="Horario del restaurante"><div class="hs-badge"><i class="hs-dot"></i> Abierto</div><div class="hs-divider" aria-hidden="true"></div><span class="hs-time"><strong>Lun–Sáb:</strong> 12–8:45pm</span><span class="hs-sep" aria-hidden="true">·</span><span class="hs-time"><strong>Dom:</strong> 12–8:30pm</span></div><div><a class="btn" href="https://wa.me/584143432131?text=Hola%20Kimtoug%2C%20quiero%20hacer%20un%20pedido">Pedir por WhatsApp</a> <a class="btn o" href="#menu">Ver menú</a></div></div>
-<div class="kv" role="img" aria-label="Logo de Kimtoug rodeado de platos de comida china y peces koi"><img class="fish-koi fish-koi-1" src="img/koi-1.webp" alt="Pez koi naranja" width="176" height="370" loading="eager"><img class="fish-koi fish-koi-2" src="img/koi-2.webp" alt="Pez koi dorado" width="176" height="370" loading="eager"><img class="d d1" src="img/hero-arroz.webp" alt="Arroz especial con camarones" width="136" height="136" loading="eager"><img class="d d2" src="img/hero-pollo-agridulce.webp" alt="Pollo agridulce crujiente" width="124" height="124" loading="eager"><img class="d d3" src="img/hero-chop-suey.webp" alt="Chop suey de vegetales frescos" width="120" height="120" loading="eager"><img class="lg" src="img/logo-kimtoug.svg" alt="Restaurante Kimtoug" width="240" height="240" loading="eager"></div></header>
+<div class="kv" role="img" aria-label="Logo de Kimtoug rodeado de platos de comida china y peces koi"><img class="koi-ring" src="img/koi-ring.webp" alt="Peces koi rodeando el logo de Kimtoug" width="754" height="754" loading="eager"><img class="d d1" src="img/hero-arroz.webp" alt="Arroz especial con camarones" width="136" height="136" loading="eager"><img class="d d2" src="img/hero-pollo-agridulce.webp" alt="Pollo agridulce crujiente" width="124" height="124" loading="eager"><img class="d d3" src="img/hero-chop-suey.webp" alt="Chop suey de vegetales frescos" width="120" height="120" loading="eager"><img class="lg" src="img/logo-kimtoug.svg" alt="Restaurante Kimtoug" width="240" height="240" loading="eager"></div></header>
 <section id="menu"><div class="w"><h2 class="bar" style="position:relative;isolate:inline;padding-left:24px;padding-right:24px;font:600 1.25rem var(--h);color:var(--dk);clip-path:polygon(0 0,100% 0,100% 100%,50% 82%,0 100%)">Menú</h2><div class="tabs" id="tb"></div><div class="khd"><div id="mph"></div><h3 id="mt"></h3></div><div id="mg"><p style="padding:20px 0;font-weight:700">Cargando menú… Si no aparece, <a style="color:var(--tan)" href="https://wa.me/584143432131?text=Hola%20Kimtoug%2C%20quiero%20hacer%20un%20pedido">escríbenos por WhatsApp</a>.</p></div></div></section>
 <section class="sec" id="como-pedir"><div class="w">
 <h2 class="bar" style="padding-left:18px;border-radius:0 14px 14px 0;display:inline-block;padding-right:40px">¿Cómo pedir?</h2>
