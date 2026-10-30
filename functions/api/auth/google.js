@@ -78,7 +78,7 @@ export async function onRequestPost(context) {
     }
 
     const isAdmin = user.role === 'admin';
-    const adminKey = isAdmin ? (process.env.ADMIN_API_KEY || '') : null;
+    const adminKey = isAdmin ? (context.env?.ADMIN_API_KEY || (typeof globalThis !== 'undefined' && globalThis.process?.env?.ADMIN_API_KEY) || '') : null;
 
     return jsonResponse({
       ok: true,

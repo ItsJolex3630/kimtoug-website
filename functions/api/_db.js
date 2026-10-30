@@ -1,12 +1,18 @@
 // Turso database helper using HTTP API
+const getEnv = (key) => {
+  if (typeof globalThis !== 'undefined' && globalThis.process?.env?.[key]) {
+    return globalThis.process.env[key];
+  }
+  return '';
+};
+
 const TURSO_URL = () => {
-  const url = process.env.TURSO_DATABASE_URL;
-  if (!url) throw new Error('TURSO_DATABASE_URL not set');
+  const url = getEnv('TURSO_DATABASE_URL') || 'libsql://kimtoug-db-itsjolex3630.aws-us-east-1.turso.io';
   return url.replace(/^libsql:\/\//, 'https://') + '/v2/pipeline';
 };
 
 const TURSO_TOKEN = () => {
-  const token = process.env.TURSO_AUTH_TOKEN;
+  const token = getEnv('TURSO_AUTH_TOKEN');
   if (!token) throw new Error('TURSO_AUTH_TOKEN not set');
   return token;
 };
@@ -101,7 +107,7 @@ export function errorResponse(message, status = 500) {
 
 export function checkAdminAuth(request) {
   const auth = request.headers.get('Authorization') || '';
-  const expectedKey = process.env.ADMIN_API_KEY || '';
+  const expectedKey = getEnv('ADMIN_API_KEY');
   if (!expectedKey) return false;
   const expected = `Bearer ${expectedKey}`;
   if (auth.length !== expected.length) return false;
